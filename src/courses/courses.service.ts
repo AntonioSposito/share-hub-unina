@@ -4,19 +4,25 @@ import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class CoursesService {
-  constructor(private readonly databaseService: DatabaseService){}
+  constructor(private readonly databaseService: DatabaseService) { }
 
   async create(createCourseDto: Prisma.CourseCreateInput) {
-    return this.databaseService.course.create({data: createCourseDto});
+    return this.databaseService.course.create({ data: createCourseDto });
   }
 
-  async findAll() {
+  async findAll(profId?: number) {
+    if (profId) return this.databaseService.course.findMany({
+      where: {
+        profId,
+      }
+    });
+
     return this.databaseService.course.findMany();
   }
 
   async findOne(id: number) {
     return this.databaseService.course.findUnique({
-      where:{
+      where: {
         id,
       }
     });
@@ -24,7 +30,7 @@ export class CoursesService {
 
   async update(id: number, updateCourseDto: Prisma.CourseUpdateInput) {
     return this.databaseService.course.update({
-      where:{
+      where: {
         id,
       },
       data: updateCourseDto
@@ -33,7 +39,7 @@ export class CoursesService {
 
   async remove(id: number) {
     return this.databaseService.course.delete({
-      where:{
+      where: {
         id,
       }
     });

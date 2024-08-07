@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { Prisma } from '@prisma/client';
 
@@ -12,8 +12,8 @@ export class ReviewsController {
   }
 
   @Get()
-  findAll() {
-    return this.reviewsService.findAll();
+  findAll(@Query('studentId') studentId?: string, @Query('fileId') fileId?: string) {
+    return this.reviewsService.findAll(+studentId, +fileId);
   }
 
   @Get(':id')

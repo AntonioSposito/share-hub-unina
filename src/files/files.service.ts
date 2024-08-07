@@ -12,7 +12,13 @@ export class FilesService {
     });
   }
 
-  async findAll() {
+  async findAll(courseId?: number) {
+    if (courseId) return this.databaseService.file.findMany({
+      where: {
+        courseId,
+      }
+    })
+
     return this.databaseService.file.findMany();
   }
 

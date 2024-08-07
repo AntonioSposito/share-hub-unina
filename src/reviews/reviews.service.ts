@@ -12,8 +12,15 @@ export class ReviewsService {
     });
   }
 
-  async findAll() {
-    return this.databaseService.review.findMany();
+  async findAll(studentId?: number, fileId?: number) {
+    const where = {};
+
+    if (studentId) { where['studentId'] = studentId; }
+    if (fileId) { where['fileId'] = fileId; }
+
+    return this.databaseService.review.findMany({
+      where,
+    });
   }
 
   async findOne(id: number) {

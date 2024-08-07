@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { Prisma } from '@prisma/client';
 
 @Controller('courses')
 export class CoursesController {
-  constructor(private readonly coursesService: CoursesService) {}
+  constructor(private readonly coursesService: CoursesService) { }
 
   @Post()
   create(@Body() createCourseDto: Prisma.CourseCreateInput) {
@@ -12,8 +12,8 @@ export class CoursesController {
   }
 
   @Get()
-  findAll() {
-    return this.coursesService.findAll();
+  findAll(@Query('profId') profId?: string) {
+    return this.coursesService.findAll(+profId);
   }
 
   @Get(':id')

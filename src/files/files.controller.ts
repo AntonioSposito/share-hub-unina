@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { Prisma } from '@prisma/client';
 
@@ -12,8 +12,8 @@ export class FilesController {
   }
 
   @Get()
-  findAll() {
-    return this.filesService.findAll();
+  findAll(@Query('courseId') courseId?: string) {
+    return this.filesService.findAll(+courseId);
   }
 
   @Get(':id')

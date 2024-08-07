@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { EnrollmentsService } from './enrollments.service';
 import { Prisma } from '@prisma/client';
 
@@ -12,8 +12,8 @@ export class EnrollmentsController {
   }
 
   @Get()
-  findAll() {
-    return this.enrollmentsService.findAll();
+  findAll(@Query('studentId') studentId?: string, @Query("courseId") courseId?: string) {
+    return this.enrollmentsService.findAll(+studentId, +courseId);
   }
 
   @Get(':id')
