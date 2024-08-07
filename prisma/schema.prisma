@@ -17,8 +17,79 @@ datasource db {
 model Student{
   id          Int       @id @default(autoincrement())
   name        String
-  surname     String
+  lastname    String?
   email       String    @unique
+  createdAt   DateTime  @default(now())
+  modifiedAt  DateTime  @updatedAt
+
+  reviews     Review[]
+  enrollments Enrollment[]
+}
+
+model Professor{
+  id          Int @id   @default(autoincrement())
+  name        String
+  lastname    String
+  email       String    @unique
+  department  String
+  createdAt   DateTime  @default(now())
+  modifiedAt  DateTime  @updatedAt
+
+  courses Course[]
+}
+
+model Course{
+  id          Int @id   @default(autoincrement())
+  title       String
+  year        DateTime
+  description String?   @default("Dammi una descrizione!")
+
+  profId      Int @unique //FK per professore
+  professor    Professor @relation(fields: [profId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  createdAt   DateTime  @default(now())
+  modifiedAt  DateTime  @updatedAt
+
+  files File[]
+  enrollments Enrollment[]
+}
+
+model File{
+  id          Int       @id   @default(autoincrement())
+  name        String
+  description String?   @default("Dammi una descrizione!")
+
+  courseId    Int       @unique //FK per corso
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  createdAt   DateTime  @default(now())
+  modifiedAt  DateTime  @updatedAt
+
+  reviews Review[]
+}
+
+model Review{
+  id          Int       @id   @default(autoincrement())
+  text        String
+  rating      Int
+
+  student_id  Int
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  file_id     Int
+  review File @relation(fields: [file_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  createdAt   DateTime  @default(now())
+  modifiedAt  DateTime  @updatedAt
+}
+
+model Enrollment{
+  student_id  Int
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  courseId    Int       @unique //FK per corso
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
   createdAt   DateTime  @default(now())
   modifiedAt  DateTime  @updatedAt
 }

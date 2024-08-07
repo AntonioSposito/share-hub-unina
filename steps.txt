@@ -33,3 +33,10 @@ Creo una risorsa studenti come REST api con CRUD endpoints:
 Rimuovere cartella dto e entities (useremo quelli creati con Prisma)
 Nel file module creato, rimuovere gli import di dto e entities, aggiungere
 l'import del db service creato prima
+
+
+---------------------------COPIA DA GITHUB--------------------------------------
+Copiare la repo di github
+- git clone https://github.com/AntonioSposito/share-hub-unina.git
+- npm install
+- npm run start:dev
