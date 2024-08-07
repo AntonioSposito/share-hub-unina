@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 
 @Controller('students')
 export class StudentsController {
-  constructor(private readonly studentsService: StudentsService) {}
+  constructor(private readonly studentsService: StudentsService) { }
 
   @Post()
   create(@Body() createStudentDto: Prisma.StudentCreateInput) {
@@ -17,17 +17,17 @@ export class StudentsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.studentsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentDto: Prisma.StudentUpdateInput) {
+  update(@Param('id') id: number, @Body() updateStudentDto: Prisma.StudentUpdateInput) {
     return this.studentsService.update(+id, updateStudentDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.studentsService.remove(+id);
   }
 }

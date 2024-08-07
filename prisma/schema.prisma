@@ -10,86 +10,80 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  //url      = env("DATABASE_URL")
-  url = "file:./dev.db"
+  url      = "file:./dev.db"
 }
 
-model Student{
-  id          Int       @id @default(autoincrement())
+model Student {
+  id          Int          @id @default(autoincrement())
   name        String
-  lastname    String?
-  email       String    @unique
-  createdAt   DateTime  @default(now())
-  modifiedAt  DateTime  @updatedAt
-
+  lastname    String
+  email       String       @unique
+  createdAt   DateTime     @default(now())
+  modifiedAt  DateTime     @updatedAt
   reviews     Review[]
   enrollments Enrollment[]
 }
 
-model Professor{
-  id          Int @id   @default(autoincrement())
-  name        String
-  lastname    String
-  email       String    @unique
-  department  String
-  createdAt   DateTime  @default(now())
-  modifiedAt  DateTime  @updatedAt
-
-  courses Course[]
+model Professor {
+  id         Int      @id @default(autoincrement())
+  name       String
+  lastname   String
+  email      String   @unique
+  department String
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+  courses    Course[]
 }
 
-model Course{
-  id          Int @id   @default(autoincrement())
+model Course {
+  id          Int          @id @default(autoincrement())
   title       String
-  year        DateTime
-  description String?   @default("Dammi una descrizione!")
-
-  profId      Int @unique //FK per professore
-  professor    Professor @relation(fields: [profId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-
-  createdAt   DateTime  @default(now())
-  modifiedAt  DateTime  @updatedAt
-
-  files File[]
+  description String?      @default("Dammi una descrizione!")
+  profId      Int //FK per professore
+  createdAt   DateTime     @default(now())
+  modifiedAt  DateTime     @updatedAt
+  professor   Professor    @relation(fields: [profId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  files       File[]
   enrollments Enrollment[]
+
+  @@unique([title, profId])
 }
 
-model File{
-  id          Int       @id   @default(autoincrement())
-  name        String
-  description String?   @default("Dammi una descrizione!")
-
-  courseId    Int       @unique //FK per corso
-  course      Course    @relation(fields: [courseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-
-  createdAt   DateTime  @default(now())
-  modifiedAt  DateTime  @updatedAt
-
-  reviews Review[]
+model File {
+  id           Int      @id @default(autoincrement())
+  name         String
+  description  String?  @default("Dammi una descrizione!")
+  path         String?  @default("Dammi/un/path!")
+  avrageRating Float?
+  courseId     Int //FK per corso
+  createdAt    DateTime @default(now())
+  modifiedAt   DateTime @updatedAt
+  course       Course   @relation(fields: [courseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  reviews      Review[]
 }
 
-model Review{
-  id          Int       @id   @default(autoincrement())
-  text        String
-  rating      Int
+model Review {
+  id         Int      @id @default(autoincrement())
+  text       String
+  rating     Int
+  studentId  Int //FK per studente
+  fileId     Int //FK per file
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  review     File     @relation(fields: [fileId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
-  student_id  Int
-  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-
-  file_id     Int
-  review File @relation(fields: [file_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
-
-  createdAt   DateTime  @default(now())
-  modifiedAt  DateTime  @updatedAt
+  @@unique([studentId, fileId])
 }
 
-model Enrollment{
-  student_id  Int
-  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+model Enrollment {
+  id         Int      @id @default(autoincrement())
+  studentId  Int //FK per studente
+  courseId   Int //FK per corso
+  createdAt  DateTime @default(now())
+  modifiedAt DateTime @updatedAt
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
-  courseId    Int       @unique //FK per corso
-  course      Course    @relation(fields: [courseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-
-  createdAt   DateTime  @default(now())
-  modifiedAt  DateTime  @updatedAt
+  @@unique([studentId, courseId])
 }

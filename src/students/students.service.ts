@@ -4,10 +4,10 @@ import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class StudentsService {
-  constructor(private readonly databaseService: DatabaseService){}
+  constructor(private readonly databaseService: DatabaseService) { }
 
   async create(createStudentDto: Prisma.StudentCreateInput) {
-    return this.databaseService.student.create({data: createStudentDto});
+    return this.databaseService.student.create({ data: createStudentDto });
   }
 
   async findAll() {
@@ -16,7 +16,7 @@ export class StudentsService {
 
   async findOne(id: number) {
     return this.databaseService.student.findUnique({
-      where:{
+      where: {
         id,
       }
     });
@@ -24,7 +24,7 @@ export class StudentsService {
 
   async update(id: number, updateStudentDto: Prisma.StudentUpdateInput) {
     return this.databaseService.student.update({
-      where:{
+      where: {
         id,
       },
       data: updateStudentDto,
@@ -33,7 +33,7 @@ export class StudentsService {
 
   async remove(id: number) {
     return this.databaseService.student.delete({
-      where:{
+      where: {
         id,
       }
     });
