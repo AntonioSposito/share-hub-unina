@@ -12,8 +12,8 @@ export class EnrollmentsController {
   }
 
   @Get()
-  findAll(@Query('studentId') studentId?: string, @Query("courseId") courseId?: string) {
-    return this.enrollmentsService.findAll(+studentId, +courseId);
+  findAll(@Query('userId') userId?: string, @Query("courseId") courseId?: string) {
+    return this.enrollmentsService.findAll(+userId, +courseId);
   }
 
   @Get(':id')

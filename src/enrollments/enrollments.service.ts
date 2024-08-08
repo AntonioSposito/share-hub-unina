@@ -12,10 +12,10 @@ export class EnrollmentsService {
     });
   }
 
-  async findAll(studentId?: number, courseId?: number) {
+  async findAll(userId?: number, courseId?: number) {
     const where = {};
 
-    if (studentId) { where['studentId'] = studentId; }
+    if (userId) { where['studentId'] = userId; }
     if (courseId) { where['courseId'] = courseId; }
 
     return this.databaseService.enrollment.findMany({

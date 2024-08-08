@@ -10,10 +10,10 @@ export class CoursesService {
     return this.databaseService.course.create({ data: createCourseDto });
   }
 
-  async findAll(profId?: number) {
-    if (profId) return this.databaseService.course.findMany({
+  async findAll(userId?: number) {
+    if (userId) return this.databaseService.course.findMany({
       where: {
-        profId,
+        userId,
       }
     });
 

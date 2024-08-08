@@ -13,40 +13,36 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model Student {
-  id          Int          @id @default(autoincrement())
+model User {
+  id          Int      @id @default(autoincrement())
   name        String
   lastname    String
-  email       String       @unique
-  createdAt   DateTime     @default(now())
-  modifiedAt  DateTime     @updatedAt
+  email       String   @unique
+  password    String
+  isProfessor Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  modifiedAt  DateTime @updatedAt
+
+  //Relazioni studente
   reviews     Review[]
   enrollments Enrollment[]
-}
 
-model Professor {
-  id         Int      @id @default(autoincrement())
-  name       String
-  lastname   String
-  email      String   @unique
-  department String
-  createdAt  DateTime @default(now())
-  modifiedAt DateTime @updatedAt
-  courses    Course[]
+  //Relazioni professore
+  courses Course[]
 }
 
 model Course {
   id          Int          @id @default(autoincrement())
   title       String
   description String?      @default("Dammi una descrizione!")
-  profId      Int //FK per professore
   createdAt   DateTime     @default(now())
   modifiedAt  DateTime     @updatedAt
-  professor   Professor    @relation(fields: [profId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  userId      Int //FK per User professore
+  User        User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   files       File[]
   enrollments Enrollment[]
 
-  @@unique([title, profId])
+  @@unique([title, userId])
 }
 
 model File {
@@ -55,10 +51,10 @@ model File {
   description  String?  @default("Dammi una descrizione!")
   path         String?  @default("Dammi/un/path!")
   avrageRating Float?
-  courseId     Int //FK per corso
   createdAt    DateTime @default(now())
   modifiedAt   DateTime @updatedAt
-  course       Course   @relation(fields: [courseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  courseId     Int //FK per corso
+  course       Course   @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   reviews      Review[]
 }
 
@@ -66,24 +62,24 @@ model Review {
   id         Int      @id @default(autoincrement())
   text       String
   rating     Int
-  studentId  Int //FK per studente
+  userId     Int //FK per user studente
   fileId     Int //FK per file
   createdAt  DateTime @default(now())
   modifiedAt DateTime @updatedAt
-  student    Student  @relation(fields: [studentId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  review     File     @relation(fields: [fileId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  review     File     @relation(fields: [fileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@unique([studentId, fileId])
+  @@unique([userId, fileId])
 }
 
 model Enrollment {
   id         Int      @id @default(autoincrement())
-  studentId  Int //FK per studente
+  userId     Int //FK per user studente
   courseId   Int //FK per corso
   createdAt  DateTime @default(now())
   modifiedAt DateTime @updatedAt
-  student    Student  @relation(fields: [studentId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   course     Course   @relation(fields: [courseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
-  @@unique([studentId, courseId])
+  @@unique([userId, courseId])
 }

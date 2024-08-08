@@ -12,10 +12,10 @@ export class ReviewsService {
     });
   }
 
-  async findAll(studentId?: number, fileId?: number) {
+  async findAll(userId?: number, fileId?: number) {
     const where = {};
 
-    if (studentId) { where['studentId'] = studentId; }
+    if (userId) { where['studentId'] = userId; }
     if (fileId) { where['fileId'] = fileId; }
 
     return this.databaseService.review.findMany({

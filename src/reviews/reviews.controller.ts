@@ -12,8 +12,8 @@ export class ReviewsController {
   }
 
   @Get()
-  findAll(@Query('studentId') studentId?: string, @Query('fileId') fileId?: string) {
-    return this.reviewsService.findAll(+studentId, +fileId);
+  findAll(@Query('userId') userId?: string, @Query('fileId') fileId?: string) {
+    return this.reviewsService.findAll(+userId, +fileId);
   }
 
   @Get(':id')

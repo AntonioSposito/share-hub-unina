@@ -12,8 +12,8 @@ export class CoursesController {
   }
 
   @Get()
-  findAll(@Query('profId') profId?: string) {
-    return this.coursesService.findAll(+profId);
+  findAll(@Query('userId') userId?: string) {
+    return this.coursesService.findAll(+userId);
   }
 
   @Get(':id')
