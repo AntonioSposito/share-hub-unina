@@ -1,0 +1,1 @@
+export const jwtSecret = "secretjwt4565"

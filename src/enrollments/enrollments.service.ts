@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { DatabaseService } from 'src/database/database.service';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class EnrollmentsService {
-  constructor(private readonly databaseService: DatabaseService) { }
+  constructor(private readonly prismaService: PrismaService) { }
 
   async create(createEnrollmentDto: Prisma.EnrollmentCreateInput) {
-    return this.databaseService.enrollment.create({
+    return this.prismaService.enrollment.create({
       data: createEnrollmentDto
     });
   }
@@ -18,13 +18,13 @@ export class EnrollmentsService {
     if (userId) { where['studentId'] = userId; }
     if (courseId) { where['courseId'] = courseId; }
 
-    return this.databaseService.enrollment.findMany({
+    return this.prismaService.enrollment.findMany({
       where,
     });
   }
 
   async findOne(id: number) {
-    return this.databaseService.enrollment.findUnique({
+    return this.prismaService.enrollment.findUnique({
       where: {
         id,
       }
@@ -32,7 +32,7 @@ export class EnrollmentsService {
   }
 
   async update(id: number, updateEnrollmentDto: Prisma.EnrollmentUpdateInput) {
-    return this.databaseService.enrollment.update({
+    return this.prismaService.enrollment.update({
       where: {
         id,
       },
@@ -41,7 +41,7 @@ export class EnrollmentsService {
   }
 
   async remove(id: number) {
-    return this.databaseService.enrollment.delete({
+    return this.prismaService.enrollment.delete({
       where: {
         id,
       }

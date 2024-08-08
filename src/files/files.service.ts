@@ -1,29 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { DatabaseService } from 'src/database/database.service';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class FilesService {
-  constructor(private readonly databaseService: DatabaseService) { }
+  constructor(private readonly prismaService: PrismaService) { }
 
   async create(createFileDto: Prisma.FileCreateInput) {
-    return this.databaseService.file.create({
+    return this.prismaService.file.create({
       data: createFileDto
     });
   }
 
   async findAll(courseId?: number) {
-    if (courseId) return this.databaseService.file.findMany({
+    if (courseId) return this.prismaService.file.findMany({
       where: {
         courseId,
       }
     })
 
-    return this.databaseService.file.findMany();
+    return this.prismaService.file.findMany();
   }
 
   async findOne(id: number) {
-    return this.databaseService.file.findUnique({
+    return this.prismaService.file.findUnique({
       where: {
         id,
       }
@@ -31,7 +31,7 @@ export class FilesService {
   }
 
   async update(id: number, updateFileDto: Prisma.FileUpdateInput) {
-    return this.databaseService.file.update({
+    return this.prismaService.file.update({
       where: {
         id,
       },
@@ -40,7 +40,7 @@ export class FilesService {
   }
 
   async remove(id: number) {
-    return this.databaseService.file.delete({
+    return this.prismaService.file.delete({
       where: {
         id,
       }

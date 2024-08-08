@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { DatabaseService } from 'src/database/database.service';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class ReviewsService {
-  constructor(private readonly databaseService: DatabaseService) { }
+  constructor(private readonly prismaService: PrismaService) { }
 
   async create(createReviewDto: Prisma.ReviewCreateInput) {
-    return this.databaseService.review.create({
+    return this.prismaService.review.create({
       data: createReviewDto
     });
   }
@@ -18,13 +18,13 @@ export class ReviewsService {
     if (userId) { where['studentId'] = userId; }
     if (fileId) { where['fileId'] = fileId; }
 
-    return this.databaseService.review.findMany({
+    return this.prismaService.review.findMany({
       where,
     });
   }
 
   async findOne(id: number) {
-    return this.databaseService.review.findUnique({
+    return this.prismaService.review.findUnique({
       where: {
         id,
       }
@@ -32,7 +32,7 @@ export class ReviewsService {
   }
 
   async update(id: number, updateReviewDto: Prisma.ReviewUpdateInput) {
-    return this.databaseService.review.update({
+    return this.prismaService.review.update({
       where: {
         id,
       },
@@ -41,7 +41,7 @@ export class ReviewsService {
   }
 
   async remove(id: number) {
-    return this.databaseService.review.delete({
+    return this.prismaService.review.delete({
       where: {
         id,
       }

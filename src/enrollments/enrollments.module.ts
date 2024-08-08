@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { EnrollmentsService } from './enrollments.service';
 import { EnrollmentsController } from './enrollments.controller';
-import { DatabaseModule } from 'src/database/database.module';
+import { PrismaModule } from 'prisma/prisma.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [PrismaModule],
   controllers: [EnrollmentsController],
   providers: [EnrollmentsService],
 })

@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { DatabaseService } from 'src/database/database.service';
+import { Request } from 'express';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly databaseService: DatabaseService) { }
+  constructor(private readonly prismaService: PrismaService) { }
 
   async create(createUserDto: Prisma.UserCreateInput) {
     if (createUserDto.email.endsWith("@unina.it")) {
@@ -15,25 +16,37 @@ export class UsersService {
       throw new Error("The email must end with \"@unina.it\" or \"@studenti.unina.it\" ");
     }
 
-    return this.databaseService.user.create({
+    return this.prismaService.user.create({
       data: createUserDto
     });
   }
 
   async findAll() {
-    return this.databaseService.user.findMany();
+    return this.prismaService.user.findMany({ select: { id: true, email: true, isProfessor: true } });
   }
 
-  async findOne(id: number) {
-    return this.databaseService.user.findUnique({
+  async findOne(id: number, req: Request) {
+    const user = this.prismaService.user.findUnique({
       where: {
         id,
-      }
+      }, select: { id: true, email: true, isProfessor: true }
     });
+
+    if (!user) {
+      throw new NotFoundException;
+    }
+
+    const decodedUser = req.user as { id: number, email: string, isProfessor: boolean }
+
+    if (!decodedUser.isProfessor) {
+      throw new ForbiddenException
+    }
+
+    return user
   }
 
   async update(id: number, updateUserDto: Prisma.UserUpdateInput) {
-    return this.databaseService.user.update({
+    return this.prismaService.user.update({
       where: {
         id,
       },
@@ -42,7 +55,7 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    return this.databaseService.user.delete({
+    return this.prismaService.user.delete({
       where: {
         id,
       }
