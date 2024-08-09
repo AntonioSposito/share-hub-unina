@@ -5,12 +5,14 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { jwtSecret } from 'src/utils/constants';
 import { Request, Response } from 'express';
+import { AuthHelpers } from './helpers/auth.helpers';
 
 @Injectable()
 export class AuthService {
 	constructor(
 		private readonly prismaService: PrismaService,
-		private readonly jwtService: JwtService
+		private readonly jwtService: JwtService,
+		//private readonly authHelpers: AuthHelpers //questo fa incazzare tutto
 	) { }
 
 	async signup(createUserDto: SignupDto) {
