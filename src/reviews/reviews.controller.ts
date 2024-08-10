@@ -6,6 +6,7 @@ import { Prisma } from '@prisma/client';
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) { }
 
+  //Bisogna aggiungere l'id del file come parametro della richiesta o come query, in modo che si possa recensire un determinato file
   @Post()
   create(@Body() createReviewDto: Prisma.ReviewCreateInput) {
     return this.reviewsService.create(createReviewDto);

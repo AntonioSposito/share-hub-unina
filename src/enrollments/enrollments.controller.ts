@@ -21,10 +21,11 @@ export class EnrollmentsController {
     return this.enrollmentsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEnrollmentDto: Prisma.EnrollmentUpdateInput) {
-    return this.enrollmentsService.update(+id, updateEnrollmentDto);
-  }
+  //Potrebbe essere inutile, di base non c'è molto da modificare nell'iscrizione, la si cancella soltanto
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateEnrollmentDto: Prisma.EnrollmentUpdateInput) {
+  //   return this.enrollmentsService.update(+id, updateEnrollmentDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

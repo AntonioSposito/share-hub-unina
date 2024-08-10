@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { jwtSecret } from 'src/utils/constants';
 import { Request, Response } from 'express';
 import { AuthHelpers } from './helpers/auth.helpers';
+import { Role } from './dto/auth.roles';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +32,8 @@ export class AuthService {
 				hashedPassword,
 				name,
 				lastname,
-				isProfessor
+				isProfessor,
+				role: isProfessor ? Role.Professor : Role.Student
 			}
 		})
 
@@ -51,7 +53,7 @@ export class AuthService {
 			throw new BadRequestException("Wrong credentials")
 		}
 
-		const token = await this.signToken({ id: foundUser.id, email: foundUser.email, isProfessor: foundUser.isProfessor })
+		const token = await this.signToken({ id: foundUser.id, email: foundUser.email, isProfessor: foundUser.isProfessor, role: foundUser.role })
 		if (!token) {
 			throw new ForbiddenException;
 		}
@@ -76,7 +78,7 @@ export class AuthService {
 		return await bcrypt.compare(args.password, args.hash)
 	}
 
-	async signToken(args: { id: number, email: string, isProfessor: boolean }) {
+	async signToken(args: { id: number, email: string, isProfessor: boolean, role: string }) {
 		const payload = args
 		return this.jwtService.signAsync(payload, { secret: jwtSecret })
 	}

@@ -20,6 +20,7 @@ model User {
   email          String   @unique
   hashedPassword String
   isProfessor    Boolean  @default(false)
+  role           String   @default("Student")
   createdAt      DateTime @default(now())
   modifiedAt     DateTime @updatedAt
 

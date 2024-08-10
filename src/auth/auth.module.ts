@@ -6,7 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthHelpers } from './helpers/auth.helpers';
 
 @Module({
-  imports: [JwtModule, PassportModule],
+  imports: [JwtModule, PassportModule, AuthHelpers],
   controllers: [AuthController],
   providers: [AuthService],
 })

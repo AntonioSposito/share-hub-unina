@@ -29,17 +29,11 @@ export class UsersService {
     const user = this.prismaService.user.findUnique({
       where: {
         id,
-      }, select: { id: true, email: true, isProfessor: true }
+      }, select: { id: true, email: true, isProfessor: true, role: true }
     });
 
     if (!user) {
       throw new NotFoundException;
-    }
-
-    const decodedUser = req.user as { id: number, email: string, isProfessor: boolean }
-
-    if (!decodedUser.isProfessor) {
-      throw new ForbiddenException
     }
 
     return user
