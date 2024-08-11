@@ -1,6 +1,9 @@
 # compiled output
+dist
 node_modules
 build
+prisma/migrations
+
 
 # Logs
 logs
@@ -59,4 +62,4 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 Funzionalità da aggiungere.txt
 ~$urls.xlsx
 urls.xlsx
-.turbo
+.turbo/

@@ -27,18 +27,32 @@ Progetto di Antonio Sposito
 ## Installazione
 
 ```bash
+$ git clone https://github.com/AntonioSposito/share-hub-unina.git
+$ cd share-hub-unina
 $ npm install
+$ cd .\apps\api\
+$ npx prisma generate
 ```
 
-## Lanciare l'app
+## Dev mode
+Lancio dell'app in watch mode, due server in parallelo per frontend e backend rispettivamente.
 
 ```bash
-# development
-$ npm run start
+# development watch mode
+$ npm run dev
+```
 
-# watch mode
-$ npm run start:dev
+- Il frontend è un'app React servita da Vite su: http://localhost:5173
+- Il backend è un'app NestJs servita da Webpack su: http://localhost:3000/api
 
+Le richieste dal frontend al backend avvengono con un API proxu fornito da Vite.
+
+## Production mode
+Singolo server NestJs che serve sia backend che frontend
+- App accessibile su: http://localhost:3000
+
+```bash
 # production mode
-$ npm run start:prod
+$ npm run build
+$ npm run start
 ```
