@@ -1,42 +1,51 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { Request } from 'express';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService) {}
 
   async create(createUserDto: Prisma.UserCreateInput) {
-    if (createUserDto.email.endsWith("@unina.it")) {
+    if (createUserDto.email.endsWith('@unina.it')) {
       createUserDto.isProfessor = true;
-    } else if (createUserDto.email.endsWith("@studenti.unina.it")) {
+    } else if (createUserDto.email.endsWith('@studenti.unina.it')) {
       createUserDto.isProfessor = false;
     } else {
-      throw new Error("The email must end with \"@unina.it\" or \"@studenti.unina.it\" ");
+      throw new Error(
+        'The email must end with "@unina.it" or "@studenti.unina.it" ',
+      );
     }
 
     return this.prismaService.user.create({
-      data: createUserDto
+      data: createUserDto,
     });
   }
 
   async findAll() {
-    return this.prismaService.user.findMany({ select: { id: true, email: true, isProfessor: true } });
+    return this.prismaService.user.findMany({
+      select: { id: true, name: true, lastname: true, email: true, role: true },
+    });
   }
 
   async findOne(id: number, req: Request) {
     const user = this.prismaService.user.findUnique({
       where: {
         id,
-      }, select: { id: true, email: true, isProfessor: true, role: true }
+      },
+      select: { id: true, name: true, lastname: true, email: true, role: true },
     });
 
     if (!user) {
-      throw new NotFoundException;
+      throw new NotFoundException();
     }
 
-    return user
+    return user;
   }
 
   async update(id: number, updateUserDto: Prisma.UserUpdateInput) {
@@ -44,7 +53,7 @@ export class UsersService {
       where: {
         id,
       },
-      data: updateUserDto
+      data: updateUserDto,
     });
   }
 
@@ -52,7 +61,7 @@ export class UsersService {
     return this.prismaService.user.delete({
       where: {
         id,
-      }
+      },
     });
   }
 }
