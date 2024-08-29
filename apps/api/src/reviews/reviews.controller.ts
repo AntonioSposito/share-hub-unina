@@ -1,12 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { Prisma } from '@prisma/client';
 
 @Controller('reviews')
 export class ReviewsController {
-  constructor(private readonly reviewsService: ReviewsService) { }
+  constructor(private readonly reviewsService: ReviewsService) {}
 
-  //Bisogna aggiungere l'id del file come parametro della richiesta o come query, in modo che si possa recensire un determinato file
   @Post()
   create(@Body() createReviewDto: Prisma.ReviewCreateInput) {
     return this.reviewsService.create(createReviewDto);
@@ -23,7 +31,10 @@ export class ReviewsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReviewDto: Prisma.ReviewUpdateInput) {
+  update(
+    @Param('id') id: string,
+    @Body() updateReviewDto: Prisma.ReviewUpdateInput,
+  ) {
     return this.reviewsService.update(+id, updateReviewDto);
   }
 

@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react"
-import { Button, Container, Table } from "react-bootstrap"
-import { useLocation, useParams } from "react-router-dom" // Aggiungi import
+import { Button, Container, Table, Form, Row, Col } from "react-bootstrap"
+import { useLocation, useParams } from "react-router-dom"
+import AddEnrollment from "./addEnrollment"
+import { useContext } from "react"
+import { UserContext } from "../contexts/UserContext"
+import DeleteCourse from "./DeleteCourse"
+import EditCourse from "./EditCourse"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -12,33 +17,41 @@ interface Course {
 	userId: number
 }
 
-export default function Demo() {
+interface CoursesProps {
+	userId?: number
+}
+
+export default function Courses({ userId }: CoursesProps) {
 	const { id } = useParams<{ id?: string }>()
-	const { search } = useLocation() // Ottieni la query string
+	const { search } = useLocation()
 	const [error, setError] = useState<any>()
 	const [isLoading, setIsLoading] = useState(false)
 	const [courses, setCourses] = useState<Course[]>([])
 	const [course, setCourse] = useState<Course | null>(null)
+	const [searchQuery, setSearchQuery] = useState("") // Stato per la query di ricerca
+	const { user } = useContext(UserContext)
+
+	const courseIdNumber = id ? parseInt(id, 10) : null
 
 	// Gestione della query string
 	const queryParams = new URLSearchParams(search)
-	const userId = queryParams.get("userId")
+	const urlUserId = queryParams.get("userId")
 
 	useEffect(() => {
 		const fetchCourses = async () => {
 			setIsLoading(true)
 			let url = BASE_URL_API + "/courses/"
 
-			if (userId) {
-				url += `?userId=${userId}`
-			} else if (id) {
+			if (id) {
 				url += id
+			} else if (userId || urlUserId) {
+				url += `?userId=${userId || urlUserId}`
 			}
 
 			try {
 				const response = await fetch(url, {
 					method: "GET",
-					credentials: "include", // Includi i cookie nella richiesta
+					credentials: "include",
 				})
 				if (!response.ok) {
 					throw new Error("Network response was not ok")
@@ -58,7 +71,14 @@ export default function Demo() {
 		}
 
 		fetchCourses()
-	}, [id, search])
+	}, [id, userId, urlUserId])
+
+	// Funzione per filtrare i corsi in base alla query di ricerca
+	const filteredCourses = courses.filter(
+		(course) =>
+			course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			course.description.toLowerCase().includes(searchQuery.toLowerCase())
+	)
 
 	if (isLoading) {
 		return (
@@ -122,6 +142,13 @@ export default function Demo() {
 						</tr>
 					</tbody>
 				</Table>
+				<EditCourse
+					courseId={course.id}
+					currentDescription={course.description}
+					currentTitle={course.title}
+					onCourseUpdated={() => window.location.reload()}
+				></EditCourse>
+				<DeleteCourse courseId={course.id}></DeleteCourse>
 			</div>
 		)
 	}
@@ -136,12 +163,25 @@ export default function Demo() {
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
 					/>
-					{userId ? (
+					{userId || urlUserId ? (
 						<h2 className="text-2xl">Elenco corsi per docente:</h2>
 					) : (
 						<h2 className="text-2xl">Elenco corsi:</h2>
 					)}
 				</Container>
+
+				{/* Campo di ricerca */}
+				<Form className="mb-4">
+					<Form.Group controlId="search">
+						<Form.Label>Ricerca corsi:</Form.Label>
+						<Form.Control
+							type="text"
+							placeholder="Cerca per titolo o descrizione"
+							value={searchQuery}
+							onChange={(e) => setSearchQuery(e.target.value)}
+						/>
+					</Form.Group>
+				</Form>
 			</div>
 			<Table striped>
 				<thead>
@@ -154,7 +194,7 @@ export default function Demo() {
 					</tr>
 				</thead>
 				<tbody>
-					{courses.map((course) => (
+					{filteredCourses.map((course) => (
 						<tr key={course.id}>
 							<td>
 								<a href={BASE_URL + "/courses/" + course.id}>
@@ -179,6 +219,14 @@ export default function Demo() {
 								>
 									File
 								</Button>
+							</td>
+							<td>
+								{(user.role === "Student" ||
+									user.role === "Admin") && (
+									<AddEnrollment
+										courseId={course.id}
+									></AddEnrollment>
+								)}
 							</td>
 						</tr>
 					))}

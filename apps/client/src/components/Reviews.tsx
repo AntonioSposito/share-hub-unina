@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
+import StarRating from "./StarRating"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -105,7 +106,9 @@ export default function Reviews() {
 						</tr>
 						<tr>
 							<td>Rating</td>
-							<td>{review.rating}/5</td>
+							<td>
+								<StarRating rating={review.rating} />
+							</td>
 						</tr>
 						<tr>
 							<td>User Id</td>
@@ -150,7 +153,9 @@ export default function Reviews() {
 						<tr key={review.id}>
 							<td>{review.id}</td>
 							<td>{review.text}</td>
-							<td>{review.rating}/5</td>
+							<td>
+								<StarRating rating={review.rating} />
+							</td>
 							<td>{review.userId}</td>
 							<td>{review.fileId}</td>
 							<td>

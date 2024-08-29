@@ -12,6 +12,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 import Home from "./components/Home.tsx"
 import LoginForm from "./components/LoginForm.tsx"
+import RegistrationForm from "./components/RegistrationForm.tsx"
 import Users from "./components/Users.tsx"
 import Navbar from "./components/Navbar.tsx"
 import Footer from "./components/Footer.tsx"
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
 	{ path: "/", element: <App />, errorElement: <NotFoundPage /> },
 	{ path: "/home", element: <Home /> },
 	{ path: "/login", element: <LoginForm /> },
+	{ path: "/registration", element: <RegistrationForm /> },
 	{ path: "/users", element: <Users /> },
 	{ path: "/users/:id", element: <Users /> },
 	{ path: "/courses", element: <Courses /> },
@@ -48,8 +50,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<UserProvider>
-			<Navbar />
-			<body>
+			<body className="d-flex flex-column min-vh-100">
+				<Navbar />
+
 				<Container>
 					<Row>
 						<br />
@@ -60,8 +63,8 @@ createRoot(document.getElementById("root")!).render(
 						</Col>
 					</Row>
 				</Container>
+				<Footer />
 			</body>
-			<Footer />
 		</UserProvider>
 	</StrictMode>
 )

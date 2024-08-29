@@ -12,7 +12,11 @@ interface Enrollment {
 	// Aggiungi altre proprietà dell'enrollment se necessario
 }
 
-export default function Enrollments() {
+interface EnrollmentsProps {
+	userId?: number // Aggiungi la prop userId
+}
+
+export default function Enrollments({ userId }: EnrollmentsProps) {
 	const { id } = useParams<{ id?: string }>()
 	const { search } = useLocation()
 	const [enrollments, setEnrollments] = useState<Enrollment[]>([])
@@ -22,7 +26,6 @@ export default function Enrollments() {
 
 	// Estrai i parametri di query dalla stringa di ricerca
 	const queryParams = new URLSearchParams(search)
-	const userId = queryParams.get("userId")
 	const courseId = queryParams.get("courseId")
 
 	useEffect(() => {
@@ -142,16 +145,19 @@ export default function Enrollments() {
 			<Table striped>
 				<thead>
 					<tr>
-						<th>Id</th>
+						<th>Id iscrizione</th>
 						<th>User Id</th>
 						<th>Course Id</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					{enrollments.map((enrollment) => (
 						<tr key={enrollment.id}>
-							<td>{enrollment.id}</td>
+							<td>
+								<a href={`/enrollments/${enrollment.id}`}>
+									{enrollment.id}
+								</a>
+							</td>
 							<td>
 								<a
 									href={`${BASE_URL}/users/${enrollment.userId}`}

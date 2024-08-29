@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom" // Aggiungi import
+import AddFile from "./addFile"
+import { UserContext } from "../contexts/UserContext"
+import AddReview from "./addReview"
+import StarRating from "./StarRating"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
-
-// interface Course {
-// 	id: number
-// 	title: string
-// 	description: string
-// 	userId: number
-// }
 
 interface File {
 	id: number
@@ -21,19 +18,20 @@ interface File {
 	courseId: number
 }
 
-export default function Demo() {
+export default function FIles() {
+	const { user } = useContext(UserContext)
 	const { id } = useParams<{ id?: string }>()
 	const { search } = useLocation() // Ottieni la query string
 	const [error, setError] = useState<any>()
 	const [isLoading, setIsLoading] = useState(false)
-	// const [courses, setCourses] = useState<Course[]>([])
-	// const [course, setCourse] = useState<Course | null>(null)
+	const [showAddCourseForm, setShowAddCourseForm] = useState(false) // Stato per la visibilità del form
 	const [files, setFiles] = useState<File[]>([])
 	const [file, setFile] = useState<File | null>(null)
 
 	// Gestione della query string
 	const queryParams = new URLSearchParams(search)
 	const courseId = queryParams.get("courseId")
+	const courseIdNumber = courseId ? parseInt(courseId, 10) : null
 
 	useEffect(() => {
 		const fetchCourses = async () => {
@@ -160,26 +158,57 @@ export default function Demo() {
 							<td>{file.courseId}</td>
 							<td>{file.name}</td>
 							<td>{file.description}</td>
-							<td>{file.avgRating}</td>
+							<td>
+								{file.avgRating !== -1 ? (
+									<>
+										<StarRating rating={file.avgRating} />(
+										{file.avgRating})
+									</>
+								) : (
+									"Nessuna recensione :("
+								)}
+							</td>
 							<td>
 								<Button href="#" variant="outline-success">
 									Download
 								</Button>
 							</td>
 							<td>
-								<Button href="#" variant="outline-success">
+								<Button
+									href={"/reviews?fileId=" + file.id}
+									variant="outline-success"
+								>
 									Recensioni
 								</Button>
 							</td>
 							<td>
-								<Button href="#" variant="outline-success">
-									Aggiungi recensione
-								</Button>
+								{(user.role === "Student" ||
+									user.role === "Admin") && (
+									<AddReview fileId={file.id} />
+								)}
 							</td>
 						</tr>
 					))}
 				</tbody>
 			</Table>
+			{courseId &&
+				(user.role === "Professor" || user.role === "Admin") && (
+					<>
+						<Button
+							variant="primary"
+							onClick={() =>
+								setShowAddCourseForm(!showAddCourseForm)
+							} // Alterna la visibilità del form
+						>
+							{showAddCourseForm
+								? "Nascondi form"
+								: "Aggiungi File"}
+						</Button>
+						{showAddCourseForm && (
+							<AddFile courseId={courseIdNumber || 0}></AddFile>
+						)}
+					</>
+				)}
 		</>
 	)
 }

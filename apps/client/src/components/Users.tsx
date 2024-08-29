@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import { useParams } from "react-router-dom"
+import DeleteUser from "./DeleteUser"
+import EditUser from "./EditUser"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -13,8 +15,13 @@ interface User {
 	role: string
 }
 
-export default function Demo() {
-	const { id } = useParams<{ id?: string }>()
+interface DemoProps {
+	userIdProp?: number // Nuova prop opzionale per accettare un userId
+}
+
+export default function Demo({ userIdProp }: DemoProps) {
+	const { id: idFromParams } = useParams<{ id?: string }>()
+	const id = userIdProp || idFromParams // Usa l'id passato come prop o quello nella URL
 	const [error, setError] = useState<any>()
 	const [isLoading, setIsLoading] = useState(false)
 	const [users, setUsers] = useState<User[]>([])
@@ -97,7 +104,7 @@ export default function Demo() {
 						<>
 							<img
 								src={"../../public/student.png"}
-								alt="Share-hub teacher Logo"
+								alt="Share-hub student Logo"
 								className="me-3"
 								style={{ width: "60px", height: "60px" }}
 							/>
@@ -165,10 +172,21 @@ export default function Demo() {
 						)}
 					</tbody>
 				</Table>
+
+				<EditUser
+					userId={user.id}
+					onUserUpdated={() => window.location.reload()}
+					currentName={user.name}
+					currentLastname={user.lastname}
+					currentEmail={user.email}
+					currentRole={user.role}
+				/>
+				<DeleteUser userId={user.id} />
 			</div>
 		)
 	}
 
+	// Se non è stato passato un ID, mostra l'elenco degli utenti
 	return (
 		<>
 			<div className="tutorial">

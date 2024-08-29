@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../contexts/UserContext"
 import Button from "react-bootstrap/Button"
 import { useNavigate } from "react-router-dom"
@@ -10,10 +10,14 @@ import Files from "./Files"
 import Reviews from "./Reviews"
 import Professors from "./Professors"
 import Students from "./Students"
+import AddCourse from "./addCourse"
+
+const BASE_URL = import.meta.env.VITE_FRONTEND_URL
 
 function Profilo() {
 	const { user, setUser } = useContext(UserContext)
 	const navigate = useNavigate()
+	const [showAddCourseForm, setShowAddCourseForm] = useState(false) // Stato per la visibilità del form
 
 	// Funzione per gestire il logout
 	const handleLogout = async () => {
@@ -53,22 +57,32 @@ function Profilo() {
 		switch (user.role) {
 			case "Student":
 				return (
-					<h2>
-						Benvenuto, utente! Qui ci va il riepilogo delle
-						iscrizioni di uno studente
-					</h2>
+					<>
+						<Enrollments userId={user.id}></Enrollments>
+					</>
 				)
 			case "Professor":
 				return (
-					<h2>
-						Benvenuto, professore! Qui ci va il riepilogo dei corsi
-						tenuti dal professore
-					</h2>
+					<>
+						<Courses userId={user.id}></Courses>
+						<Button
+							variant="primary"
+							onClick={() =>
+								setShowAddCourseForm(!showAddCourseForm)
+							} // Alterna la visibilità del form
+						>
+							{showAddCourseForm
+								? "Nascondi form"
+								: "Aggiungi Corso"}
+						</Button>
+						{showAddCourseForm && (
+							<AddCourse userId={user.id}></AddCourse>
+						)}
+					</>
 				)
 			case "Admin":
 				return (
 					<>
-						<h2>Benvenuto, amministratore!</h2>
 						<Users></Users>
 						<Professors></Professors>
 						<Students></Students>
@@ -93,6 +107,10 @@ function Profilo() {
 				ID: {user.id} {user.email} ({user.role})
 			</h1>
 			<Container fluid="md">
+				<Row>
+					<Users userIdProp={user.id}></Users>
+				</Row>
+				<br></br>
 				<Row>
 					<Col>{renderContent()}</Col>
 				</Row>

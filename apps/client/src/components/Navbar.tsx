@@ -7,7 +7,7 @@ import { UserContext } from "../contexts/UserContext"
 function CollapsibleExample() {
 	const { user } = useContext(UserContext)
 	return (
-		<Navbar expand="lg" bg="primary" data-bs-theme="dark" fixed="top">
+		<Navbar expand="lg" bg="primary" data-bs-theme="dark">
 			<Container>
 				<Navbar.Brand href="/">Share-Hub Unina</Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -29,7 +29,7 @@ function CollapsibleExample() {
 						) : (
 							<Nav.Link eventKey={2} href="/profile">
 								<u>
-									<strong>Profilo</strong>
+									<strong>Profilo ({user.role})</strong>
 								</u>
 							</Nav.Link>
 						)}

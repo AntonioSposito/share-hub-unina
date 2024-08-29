@@ -4,7 +4,7 @@ import Navbar from "react-bootstrap/Navbar"
 
 function CollapsibleExample() {
 	return (
-		<Navbar bg="light" data-bs-theme="light" fixed="bottom">
+		<Navbar bg="light" data-bs-theme="light" className="mt-auto">
 			<Container>
 				{/* <Navbar.Brand href="/">Share-Hub Unina</Navbar.Brand> */}
 				<Nav className="me-auto">

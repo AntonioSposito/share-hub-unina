@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react"
-import {
-	Button,
-	Table,
-	FormControl,
-	InputGroup,
-	Container,
-} from "react-bootstrap"
+import { Button, Table, FormControl, Container, Form } from "react-bootstrap"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -74,14 +68,17 @@ export default function Demo() {
 					/>
 					<h2 className="text-2xl">Elenco professori:</h2>
 				</Container>
-				<InputGroup className="mb-3">
-					<FormControl
-						placeholder="Cerca per cognome, email o id"
-						aria-label="Cerca"
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)} // Aggiorna lo stato di ricerca
-					/>
-				</InputGroup>
+				<Form className="mb-4">
+					<Form.Group controlId="search">
+						<Form.Label>Ricerca professori:</Form.Label>
+						<FormControl
+							placeholder="Cerca per cognome, email o id"
+							aria-label="Cerca"
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)} // Aggiorna lo stato di ricerca
+						/>
+					</Form.Group>
+				</Form>
 			</div>
 			<Table striped>
 				<thead>

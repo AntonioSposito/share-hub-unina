@@ -4,6 +4,8 @@ import { useContext } from "react"
 import { UserContext } from "../contexts/UserContext"
 import { useNavigate } from "react-router-dom"
 
+const BASE_URL = import.meta.env.VITE_FRONTEND_URL
+
 function LoginForm() {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
@@ -79,6 +81,11 @@ function LoginForm() {
 				>
 					{loading ? "Logging in..." : "Login"}
 				</button>
+				<br />
+				<br />
+				<a href={`${BASE_URL}/registration`}>
+					Registrazione nuovo utente
+				</a>
 			</form>
 		</div>
 	)

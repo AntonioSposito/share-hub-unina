@@ -32,12 +32,13 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @UseGuards(AdminOrSelfGuard)
+  //@UseGuards(AdminOrSelfGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number, @Req() req) {
     return this.usersService.findOne(id, req);
   }
 
+  @UseGuards(AdminOrSelfGuard)
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -46,6 +47,7 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
+  @UseGuards(AdminOrSelfGuard)
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);
