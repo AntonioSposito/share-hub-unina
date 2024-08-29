@@ -15,7 +15,7 @@ interface User {
 
 export default function Demo() {
 	const params = useParams()
-	console.log(params)
+	//console.log(params)
 	const [error, setError] = useState<Error | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [user, setUser] = useState<User | null>(null)
@@ -62,9 +62,9 @@ export default function Demo() {
 	return (
 		<>
 			<div className="tutorial">
-				<h1 className="mb-4 text-2xl">
-					Fetching User from API! {params.id}
-				</h1>
+				<h2 className="mb-4 text-2xl">
+					Utente (magari cambia nome qui)
+				</h2>
 			</div>
 			<Table striped>
 				<thead>

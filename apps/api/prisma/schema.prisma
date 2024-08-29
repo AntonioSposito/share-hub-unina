@@ -51,7 +51,7 @@ model File {
   name         String
   description  String?  @default("Dammi una descrizione!")
   path         String?  @default("Dammi/un/path!")
-  avrageRating Float?
+  avgRating Float?
   createdAt    DateTime @default(now())
   modifiedAt   DateTime @updatedAt
   courseId     Int //FK per corso
@@ -68,7 +68,7 @@ model Review {
   createdAt  DateTime @default(now())
   modifiedAt DateTime @updatedAt
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  review     File     @relation(fields: [fileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  file     File     @relation(fields: [fileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@unique([userId, fileId])
 }

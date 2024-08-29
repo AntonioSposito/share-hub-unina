@@ -1,11 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
-import { AdminOrSelfGuard, JwtAuthGuard, ProfessorGuard } from 'src/auth/jwt/jwt.guard';
+import {
+  AdminOrSelfGuard,
+  JwtAuthGuard,
+  ProfessorGuard,
+} from 'src/auth/jwt/jwt.guard';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   // @Post()
   // create(@Body() createUserDto: Prisma.UserCreateInput) {
@@ -24,7 +39,10 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: Prisma.UserUpdateInput) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: Prisma.UserUpdateInput,
+  ) {
     return this.usersService.update(id, updateUserDto);
   }
 

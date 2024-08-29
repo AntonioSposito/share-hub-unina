@@ -4,19 +4,23 @@ import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class EnrollmentsService {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService) {}
 
   async create(createEnrollmentDto: Prisma.EnrollmentCreateInput) {
     return this.prismaService.enrollment.create({
-      data: createEnrollmentDto
+      data: createEnrollmentDto,
     });
   }
 
   async findAll(userId?: number, courseId?: number) {
     const where = {};
 
-    if (userId) { where['studentId'] = userId; }
-    if (courseId) { where['courseId'] = courseId; }
+    if (userId) {
+      where['userId'] = userId;
+    }
+    if (courseId) {
+      where['courseId'] = courseId;
+    }
 
     return this.prismaService.enrollment.findMany({
       where,
@@ -27,7 +31,7 @@ export class EnrollmentsService {
     return this.prismaService.enrollment.findUnique({
       where: {
         id,
-      }
+      },
     });
   }
 
@@ -44,7 +48,7 @@ export class EnrollmentsService {
     return this.prismaService.enrollment.delete({
       where: {
         id,
-      }
+      },
     });
   }
 }

@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
+import { useContext } from "react"
+import { UserContext } from "../contexts/UserContext"
+import { useNavigate } from "react-router-dom"
 
 function LoginForm() {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
+	const { user, setUser } = useContext(UserContext)
+	const navigate = useNavigate()
 
 	const handleLogin = async (e: any) => {
 		e.preventDefault()
@@ -13,17 +18,18 @@ function LoginForm() {
 		setLoading(true)
 
 		try {
-			await axios.post(
+			const response = await axios.post(
 				"http://localhost:3000/api/auth/signin",
 				{
 					email,
 					password,
 				},
-				{ withCredentials: true }
-			) // Importante per inviare il cookie
-
-			// Reindirizza o aggiorna lo stato dell'app
-			console.log("Login successful!")
+				{ withCredentials: true } // Importante per inviare il cookie
+			)
+			console.log("Login response:")
+			console.log(response.data.user)
+			setUser(response.data.user)
+			navigate("/profile")
 		} catch (error) {
 			setError("Email or password is incorrect")
 		} finally {
@@ -31,12 +37,19 @@ function LoginForm() {
 		}
 	}
 
+	// Verifica l'ID utente e reindirizza a /profile se l'utente è già loggato
+	useEffect(() => {
+		if (user.id !== -1) {
+			navigate("/profile")
+		}
+	}, [user, navigate])
+
 	return (
 		<div className="login-form">
 			<h2>Login</h2>
 			<form onSubmit={handleLogin}>
 				<div className="mb-3">
-					<label className="form-label">Email address</label>
+					<label className="form-label">Indirizzo email</label>
 					<input
 						type="email"
 						className="form-control"
@@ -46,9 +59,6 @@ function LoginForm() {
 						onChange={(e) => setEmail(e.target.value)}
 						required
 					/>
-					<div id="emailHelp" className="form-text">
-						We'll never share your email with anyone else.
-					</div>
 				</div>
 				<div>
 					<label className="form-label">Password:</label>
@@ -61,6 +71,7 @@ function LoginForm() {
 					/>
 				</div>
 				{error && <p style={{ color: "red" }}>{error}</p>}
+				<br />
 				<button
 					className="btn btn-primary"
 					type="submit"
