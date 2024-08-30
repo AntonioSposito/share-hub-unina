@@ -1,33 +1,41 @@
 import React, { useState } from "react"
 import { Alert, Button, Modal } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 
-interface DeleteUserProps {
-	userId: number
+interface DeleteReviewProps {
+	reviewId: number
 }
 
-const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
+const DeleteReview: React.FC<DeleteReviewProps> = ({ reviewId }) => {
 	const [showModal, setShowModal] = useState(false)
 	const [isDeleting, setIsDeleting] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
+	const navigate = useNavigate() // Hook per la navigazione
+
 	const handleDelete = async () => {
 		setIsDeleting(true)
 		try {
-			const response = await fetch(`${BASE_URL_API}/users/${userId}`, {
-				method: "DELETE",
-				credentials: "include", // Includi i cookie nella richiesta
-			})
+			const response = await fetch(
+				`${BASE_URL_API}/reviews/${reviewId}`,
+				{
+					method: "DELETE",
+					credentials: "include", // Includi i cookie nella richiesta
+				}
+			)
 
 			if (!response.ok) {
-				throw new Error("Errore durante l'eliminazione dell'utente")
+				throw new Error(
+					"Errore durante l'eliminazione della recensione"
+				)
 			}
 
 			// Gestisci il successo dell'eliminazione, ad esempio reindirizzando l'utente
-			// o aggiornando la lista degli utenti. In questo caso, semplicemente chiudiamo il modal.
+			// o aggiornando la lista delle recensioni. In questo caso, semplicemente chiudiamo il modal.
 			setShowModal(false)
-			window.location.reload() // Ricarica la pagina per aggiornare l'elenco degli utenti
+			navigate(-1) // Torna indietro di una pagina
 		} catch (err: any) {
 			setError(err.message)
 		} finally {
@@ -38,7 +46,7 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
 	return (
 		<>
 			<Button variant="danger" onClick={() => setShowModal(true)}>
-				Elimina Utente
+				Elimina Recensione
 			</Button>{" "}
 			<Modal show={showModal} onHide={() => setShowModal(false)}>
 				<Modal.Header closeButton>
@@ -47,19 +55,8 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
 				<Modal.Body>
 					{error && <p style={{ color: "red" }}>{error}</p>}
 					<p>
-						Sei sicuro di voler eliminare l'utente con ID{" "}
-						<strong>{userId}</strong>? <p></p>
-						<Alert variant="warning">
-							Se l'utente che si sta eliminando è un{" "}
-							<strong>professore</strong>, verranno anche
-							eliminati i relativi corsi, iscrizoni, file e
-							recensioni a cascata!{" "}
-						</Alert>
-						<Alert variant="warning">
-							Se l'utente è uno <strong>studente</strong>,
-							verranno eliminate anche le sue iscrizioni e le sue
-							iscrizioni a cascata!
-						</Alert>
+						Sei sicuro di voler eliminare la recensione con ID{" "}
+						<strong>{reviewId}</strong>? <p></p>
 						<Alert variant="danger">
 							<strong>
 								Questa azione non può essere annullata!
@@ -87,4 +84,4 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
 	)
 }
 
-export default DeleteUser
+export default DeleteReview

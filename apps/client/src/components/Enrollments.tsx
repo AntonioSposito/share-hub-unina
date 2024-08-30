@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
+import DeleteEnrollment from "./DeleteEnrollment"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -13,10 +14,10 @@ interface Enrollment {
 }
 
 interface EnrollmentsProps {
-	userId?: number // Aggiungi la prop userId
+	userId?: number // Prop userId
 }
 
-export default function Enrollments({ userId }: EnrollmentsProps) {
+export default function Enrollments({ userId: propUserId }: EnrollmentsProps) {
 	const { id } = useParams<{ id?: string }>()
 	const { search } = useLocation()
 	const [enrollments, setEnrollments] = useState<Enrollment[]>([])
@@ -26,6 +27,7 @@ export default function Enrollments({ userId }: EnrollmentsProps) {
 
 	// Estrai i parametri di query dalla stringa di ricerca
 	const queryParams = new URLSearchParams(search)
+	const queryUserId = queryParams.get("userId")
 	const courseId = queryParams.get("courseId")
 
 	useEffect(() => {
@@ -33,15 +35,19 @@ export default function Enrollments({ userId }: EnrollmentsProps) {
 			setIsLoading(true)
 			let url = BASE_URL_API + "/enrollments"
 
+			// Determina se usare userId da props o da query string
+			const userId = propUserId || queryUserId
+
 			// Aggiungi i parametri di query all'URL se presenti
 			const queryStrings: string[] = []
 			if (userId) queryStrings.push(`userId=${userId}`)
 			if (courseId) queryStrings.push(`courseId=${courseId}`)
 
-			if (queryStrings.length > 0) {
-				url += `?${queryStrings.join("&")}`
-			} else if (id) {
+			if (id) {
+				// Se esiste un `id`, viene utilizzato per cercare una specifica iscrizione
 				url += `/${id}`
+			} else if (queryStrings.length > 0) {
+				url += `?${queryStrings.join("&")}`
 			}
 
 			try {
@@ -70,7 +76,7 @@ export default function Enrollments({ userId }: EnrollmentsProps) {
 		}
 
 		fetchEnrollments()
-	}, [id, search, userId, courseId])
+	}, [id, propUserId, queryUserId, courseId])
 
 	if (isLoading) {
 		return (
@@ -89,7 +95,7 @@ export default function Enrollments({ userId }: EnrollmentsProps) {
 			<div>
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/course.png"}
+						src={"/course.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -122,9 +128,9 @@ export default function Enrollments({ userId }: EnrollmentsProps) {
 								</a>
 							</td>
 						</tr>
-						{/* Aggiungi altre righe se necessario */}
 					</tbody>
 				</Table>
+				<DeleteEnrollment enrollmentId={enrollment.id} />
 			</div>
 		)
 	}
@@ -134,7 +140,7 @@ export default function Enrollments({ userId }: EnrollmentsProps) {
 			<div className="tutorial">
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/enrollment.png"}
+						src={"/enrollment.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -154,9 +160,12 @@ export default function Enrollments({ userId }: EnrollmentsProps) {
 					{enrollments.map((enrollment) => (
 						<tr key={enrollment.id}>
 							<td>
-								<a href={`/enrollments/${enrollment.id}`}>
+								<Button
+									href={`/enrollments/${enrollment.id}`}
+									variant="outline-primary"
+								>
 									{enrollment.id}
-								</a>
+								</Button>
 							</td>
 							<td>
 								<a
@@ -171,14 +180,6 @@ export default function Enrollments({ userId }: EnrollmentsProps) {
 								>
 									{enrollment.courseId}
 								</a>
-							</td>
-							<td>
-								<Button
-									href={`/enrollments/${enrollment.id}`}
-									variant="outline-success"
-								>
-									Dettagli
-								</Button>
 							</td>
 						</tr>
 					))}

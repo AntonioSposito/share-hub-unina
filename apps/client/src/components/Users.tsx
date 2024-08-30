@@ -92,7 +92,7 @@ export default function Demo({ userIdProp }: DemoProps) {
 					{user.role === "Professor" && (
 						<>
 							<img
-								src={"../../public/teacher.png"}
+								src={"/teacher.png"}
 								alt="Share-hub teacher Logo"
 								className="me-3"
 								style={{ width: "60px", height: "60px" }}
@@ -103,7 +103,7 @@ export default function Demo({ userIdProp }: DemoProps) {
 					{user.role === "Student" && (
 						<>
 							<img
-								src={"../../public/student.png"}
+								src={"/student.png"}
 								alt="Share-hub student Logo"
 								className="me-3"
 								style={{ width: "60px", height: "60px" }}
@@ -138,11 +138,12 @@ export default function Demo({ userIdProp }: DemoProps) {
 							<tr>
 								<td>Corsi</td>
 								<td>
-									<a
+									<Button
 										href={`${BASE_URL}/courses?userId=${user.id}`}
+										variant="outline-success"
 									>
-										Visualizza corsi
-									</a>
+										Corsi
+									</Button>
 								</td>
 							</tr>
 						)}
@@ -151,21 +152,23 @@ export default function Demo({ userIdProp }: DemoProps) {
 								<tr>
 									<td>Iscrizioni</td>
 									<td>
-										<a
+										<Button
 											href={`${BASE_URL}/enrollments?userId=${user.id}`}
+											variant="outline-success"
 										>
-											Visualizza iscrizioni
-										</a>
+											Iscrizioni
+										</Button>
 									</td>
 								</tr>
 								<tr>
 									<td>Recensioni</td>
 									<td>
-										<a
+										<Button
 											href={`${BASE_URL}/reviews?userId=${user.id}`}
+											variant="outline-success"
 										>
-											Visualizza recensioni
-										</a>
+											Recensioni
+										</Button>
 									</td>
 								</tr>
 							</>
@@ -208,9 +211,14 @@ export default function Demo({ userIdProp }: DemoProps) {
 					{users.map((user) => (
 						<tr key={user.id}>
 							<td>
-								<a href={`${BASE_URL}/users/${user.id}`}>
-									{user.id}
-								</a>
+								<div className="d-grid gap-2">
+									<Button
+										href={`${BASE_URL}/users/${user.id}`}
+										variant="outline-primary"
+									>
+										{user.id}
+									</Button>
+								</div>
 							</td>
 							<td>{user.name}</td>
 							<td>{user.lastname}</td>
@@ -218,30 +226,36 @@ export default function Demo({ userIdProp }: DemoProps) {
 							<td>{user.role}</td>
 							<td>
 								{user.role === "Professor" && (
-									<Button
-										href={`${BASE_URL}/courses?userId=${user.id}`}
-										variant="outline-success"
-									>
-										Corsi
-									</Button>
+									<div className="d-grid gap-2">
+										<Button
+											href={`${BASE_URL}/courses?userId=${user.id}`}
+											variant="outline-success"
+										>
+											Corsi
+										</Button>
+									</div>
 								)}
 								{user.role === "Student" && (
-									<Button
-										href={`${BASE_URL}/enrollments?userId=${user.id}`}
-										variant="outline-success"
-									>
-										Iscrizioni
-									</Button>
+									<div className="d-grid gap-2">
+										<Button
+											href={`${BASE_URL}/enrollments?userId=${user.id}`}
+											variant="outline-success"
+										>
+											Iscrizioni
+										</Button>
+									</div>
 								)}
 							</td>
 							<td>
 								{user.role === "Student" && (
-									<Button
-										href={`${BASE_URL}/reviews?userId=${user.id}`}
-										variant="outline-success"
-									>
-										Recensioni
-									</Button>
+									<div className="d-grid gap-2">
+										<Button
+											href={`${BASE_URL}/reviews?userId=${user.id}`}
+											variant="outline-success"
+										>
+											Recensioni
+										</Button>
+									</div>
 								)}
 							</td>
 						</tr>

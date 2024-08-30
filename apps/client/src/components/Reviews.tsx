@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
 import StarRating from "./StarRating"
+import DeleteReview from "./DeleteReview"
+import EditReview from "./EditReview"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -14,7 +16,11 @@ interface Review {
 	fileId: number
 }
 
-export default function Reviews() {
+interface ReviewsProps {
+	userId?: number // Aggiunto userId come prop opzionale
+}
+
+export default function Reviews({ userId }: ReviewsProps) {
 	const { id } = useParams<{ id?: string }>()
 	const { search } = useLocation()
 	const [reviews, setReviews] = useState<Review[]>([])
@@ -24,8 +30,11 @@ export default function Reviews() {
 
 	// Estrai i parametri di query dalla stringa di ricerca
 	const queryParams = new URLSearchParams(search)
-	const userId = queryParams.get("userId")
+	const urlUserId = queryParams.get("userId")
 	const fileId = queryParams.get("fileId")
+
+	// Usa userId prop se presente, altrimenti usa quello dalla query string
+	const finalUserId = userId ?? urlUserId
 
 	useEffect(() => {
 		const fetchReviews = async () => {
@@ -34,7 +43,7 @@ export default function Reviews() {
 
 			// Aggiungi i parametri di query all'URL se presenti
 			const queryStrings: string[] = []
-			if (userId) queryStrings.push(`userId=${userId}`)
+			if (finalUserId) queryStrings.push(`userId=${finalUserId}`)
 			if (fileId) queryStrings.push(`fileId=${fileId}`)
 
 			if (queryStrings.length > 0) {
@@ -68,7 +77,7 @@ export default function Reviews() {
 		}
 
 		fetchReviews()
-	}, [id, search, userId, fileId])
+	}, [id, search, finalUserId, fileId])
 
 	if (isLoading) {
 		return (
@@ -87,12 +96,12 @@ export default function Reviews() {
 			<div>
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/review.png"}
+						src={"/review.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
 					/>
-					<h2 className="text-2xl">Dettagli file:</h2>
+					<h2 className="text-2xl">Dettagli recensione:</h2>
 				</Container>
 				<Table striped>
 					<tbody>
@@ -112,14 +121,31 @@ export default function Reviews() {
 						</tr>
 						<tr>
 							<td>User Id</td>
-							<td>{review.userId}</td>
+							<td>
+								<a href={`${BASE_URL}/users/${review.userId}`}>
+									{review.userId}
+								</a>
+							</td>
 						</tr>
 						<tr>
 							<td>File Id</td>
-							<td>{review.fileId}</td>
+							<td>
+								<a href={`${BASE_URL}/files/${review.fileId}`}>
+									{review.fileId}
+								</a>
+							</td>
 						</tr>
 					</tbody>
 				</Table>
+				<EditReview
+					reviewId={review.id}
+					onReviewUpdated={() => window.location.reload()}
+					currentText={review.text}
+					currentRating={review.rating}
+					userId={review.userId}
+					fileId={review.fileId}
+				></EditReview>
+				<DeleteReview reviewId={review.id}></DeleteReview>
 			</div>
 		)
 	}
@@ -129,7 +155,7 @@ export default function Reviews() {
 			<div className="tutorial">
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/review.png"}
+						src={"/review.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -145,26 +171,34 @@ export default function Reviews() {
 						<th>Rating</th>
 						<th>User Id</th>
 						<th>File Id</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					{reviews.map((review) => (
 						<tr key={review.id}>
-							<td>{review.id}</td>
+							<td>
+								<div className="d-grid gap-2">
+									<Button
+										href={`/reviews/${review.id}`}
+										variant="outline-primary"
+									>
+										{review.id}
+									</Button>
+								</div>
+							</td>
 							<td>{review.text}</td>
 							<td>
 								<StarRating rating={review.rating} />
 							</td>
-							<td>{review.userId}</td>
-							<td>{review.fileId}</td>
 							<td>
-								<Button
-									href={`/reviews/${review.id}`}
-									variant="outline-success"
-								>
-									Dettagli
-								</Button>
+								<a href={`${BASE_URL}/users/${review.userId}`}>
+									{review.userId}
+								</a>
+							</td>
+							<td>
+								<a href={`${BASE_URL}/files/${review.fileId}`}>
+									{review.fileId}
+								</a>
 							</td>
 						</tr>
 					))}

@@ -59,6 +59,7 @@ function Profilo() {
 				return (
 					<>
 						<Enrollments userId={user.id}></Enrollments>
+						<Reviews userId={user.id}></Reviews>
 					</>
 				)
 			case "Professor":

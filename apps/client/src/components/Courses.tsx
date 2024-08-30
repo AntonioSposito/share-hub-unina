@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Button, Container, Table, Form, Row, Col } from "react-bootstrap"
+import { Button, Container, Table, Form } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
 import AddEnrollment from "./addEnrollment"
 import { useContext } from "react"
@@ -31,7 +31,7 @@ export default function Courses({ userId }: CoursesProps) {
 	const [searchQuery, setSearchQuery] = useState("") // Stato per la query di ricerca
 	const { user } = useContext(UserContext)
 
-	const courseIdNumber = id ? parseInt(id, 10) : null
+	//const courseIdNumber = id ? parseInt(id, 10) : null
 
 	// Gestione della query string
 	const queryParams = new URLSearchParams(search)
@@ -97,7 +97,7 @@ export default function Courses({ userId }: CoursesProps) {
 			<div>
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/course.png"}
+						src={"/course.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -140,6 +140,17 @@ export default function Courses({ userId }: CoursesProps) {
 								</a>
 							</td>
 						</tr>
+						<tr>
+							<td>Iscrizione</td>
+							<td>
+								{(user.role === "Student" ||
+									user.role === "Admin") && (
+									<AddEnrollment
+										courseId={course.id}
+									></AddEnrollment>
+								)}
+							</td>
+						</tr>
 					</tbody>
 				</Table>
 				<EditCourse
@@ -158,7 +169,7 @@ export default function Courses({ userId }: CoursesProps) {
 			<div className="tutorial">
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/course.png"}
+						src={"/course.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -190,16 +201,22 @@ export default function Courses({ userId }: CoursesProps) {
 						<th>Titolo corso</th>
 						<th>Descrizione</th>
 						<th>Docente</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					{filteredCourses.map((course) => (
 						<tr key={course.id}>
 							<td>
-								<a href={BASE_URL + "/courses/" + course.id}>
-									{course.id}
-								</a>
+								<div className="d-grid gap-2">
+									<Button
+										href={
+											BASE_URL + "/courses/" + course.id
+										}
+										variant="outline-primary"
+									>
+										{course.id}
+									</Button>
+								</div>
 							</td>
 							<td>{course.title}</td>
 							<td>{course.description}</td>
@@ -209,16 +226,18 @@ export default function Courses({ userId }: CoursesProps) {
 								</a>
 							</td>
 							<td>
-								<Button
-									href={
-										BASE_URL +
-										"/files?courseId=" +
-										course.id
-									}
-									variant="outline-success"
-								>
-									File
-								</Button>
+								<div className="d-grid gap-2">
+									<Button
+										href={
+											BASE_URL +
+											"/files?courseId=" +
+											course.id
+										}
+										variant="outline-success"
+									>
+										File
+									</Button>
+								</div>
 							</td>
 							<td>
 								{(user.role === "Student" ||

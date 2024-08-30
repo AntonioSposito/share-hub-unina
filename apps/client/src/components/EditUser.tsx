@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
@@ -76,7 +76,7 @@ export default function EditUser({
 	return (
 		<>
 			<Button variant="primary" onClick={handleShow}>
-				Modifica
+				Modifica Utente
 			</Button>{" "}
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>

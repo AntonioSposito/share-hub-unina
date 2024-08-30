@@ -53,7 +53,7 @@ export default function Demo() {
 			<div className="tutorial">
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/student.png"}
+						src={"/student.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -78,35 +78,43 @@ export default function Demo() {
 							return (
 								<tr key={user.id}>
 									<td>
-										<a
-											href={
-												BASE_URL + "/users/" + user.id
-											}
-										>
-											{user.id}
-										</a>
+										<div className="d-grid gap-2">
+											<Button
+												href={`${BASE_URL}/users/${user.id}`}
+												variant="outline-primary"
+											>
+												{user.id}
+											</Button>
+										</div>
 									</td>
 									<td>{user.name}</td>
 									<td>{user.lastname}</td>
 									<td>{user.email}</td>
 									<td>{user.role}</td>
 									<td>
-										<Button
-											href={
-												"/enrollments?userId=" + user.id
-											}
-											variant="outline-success"
-										>
-											Iscrizioni
-										</Button>
+										<div className="d-grid gap-2">
+											<Button
+												href={
+													"/enrollments?userId=" +
+													user.id
+												}
+												variant="outline-success"
+											>
+												Iscrizioni
+											</Button>
+										</div>
 									</td>
 									<td>
-										<Button
-											href={"/reviews?userId=" + user.id}
-											variant="outline-success"
-										>
-											Recensioni
-										</Button>
+										<div className="d-grid gap-2">
+											<Button
+												href={
+													"/reviews?userId=" + user.id
+												}
+												variant="outline-success"
+											>
+												Recensioni
+											</Button>
+										</div>
 									</td>
 								</tr>
 							)

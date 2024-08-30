@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Button, Modal } from "react-bootstrap"
+import { Alert, Button, Modal } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
@@ -54,8 +54,17 @@ const DeleteCourse: React.FC<DeleteCourseProps> = ({ courseId }) => {
 					{error && <p style={{ color: "red" }}>{error}</p>}
 					<p>
 						Sei sicuro di voler eliminare il corso con ID{" "}
-						<strong>{courseId}</strong>? Questa azione non può
-						essere annullata.
+						<strong>{courseId}</strong>?<p></p>
+						<Alert variant="warning">
+							Verranno anche i file relativi a questo corso e le
+							loro recensioni a cascata. Inoltre verranno
+							eliminate le iscrizioni a questo corso!
+						</Alert>
+						<Alert variant="danger">
+							<strong>
+								Questa azione non può essere annullata!
+							</strong>
+						</Alert>
 					</p>
 				</Modal.Body>
 				<Modal.Footer>

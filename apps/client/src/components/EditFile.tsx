@@ -1,63 +1,62 @@
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 
-interface EditCourseProps {
-	courseId: number
-	onCourseUpdated: () => void
-	currentTitle: string // Dati correnti del corso
-	currentDescription: string
+interface EditFileProps {
+	fileId: number
+	onFileUpdated: () => void
+	currentDescription: string // Descrizione corrente del file
+	currentName: string // Nome corrente del file
+	courseId: number // ID del corso (non modificabile)
 }
 
-export default function EditCourse({
-	courseId,
-	onCourseUpdated,
-	currentTitle,
+export default function EditFile({
+	fileId,
+	onFileUpdated,
 	currentDescription,
-}: EditCourseProps) {
+	currentName,
+	courseId,
+}: EditFileProps) {
 	const [show, setShow] = useState(false)
-	const [title, setTitle] = useState(currentTitle)
 	const [description, setDescription] = useState(currentDescription)
+	const [name, setName] = useState(currentName)
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
 	const handleClose = () => setShow(false)
 	const handleShow = () => setShow(true)
 
-	// Aggiorna il form con i dati correnti del corso ogni volta che si apre il modal
+	// Aggiorna il form con i dati correnti del file ogni volta che si apre il modal
 	useEffect(() => {
 		if (show) {
-			setTitle(currentTitle)
 			setDescription(currentDescription)
+			setName(currentName)
 		}
-	}, [show, currentTitle, currentDescription])
+	}, [show, currentDescription, currentName])
 
 	const handleSave = async () => {
 		setIsLoading(true)
 		setError(null)
 
 		try {
-			const response = await fetch(
-				`${BASE_URL_API}/courses/${courseId}`,
-				{
-					method: "PATCH",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					credentials: "include",
-					body: JSON.stringify({
-						title,
-						description,
-					}),
-				}
-			)
+			const response = await fetch(`${BASE_URL_API}/files/${fileId}`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				credentials: "include",
+				body: JSON.stringify({
+					description,
+					name,
+				}),
+			})
 
 			if (!response.ok) {
-				throw new Error("Errore durante l'aggiornamento del corso")
+				throw new Error("Errore durante l'aggiornamento del file")
 			}
 
-			onCourseUpdated()
+			onFileUpdated()
 			handleClose()
 		} catch (e: any) {
 			setError(e.message)
@@ -69,25 +68,28 @@ export default function EditCourse({
 	return (
 		<>
 			<Button variant="primary" onClick={handleShow}>
-				Modifica Corso
+				Modifica File
 			</Button>{" "}
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Modifica Corso</Modal.Title>
+					<Modal.Title>Modifica File</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group controlId="formTitle">
-							<Form.Label>Titolo</Form.Label>
+						<Form.Group controlId="formName">
+							<Form.Label>Nome del File</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Inserisci il titolo"
-								value={title}
-								onChange={(e) => setTitle(e.target.value)}
+								placeholder="Inserisci il nome del file"
+								value={name}
+								onChange={(e) => setName(e.target.value)}
 							/>
 						</Form.Group>
 
-						<Form.Group controlId="formDescription">
+						<Form.Group
+							controlId="formDescription"
+							className="mt-3"
+						>
 							<Form.Label>Descrizione</Form.Label>
 							<Form.Control
 								as="textarea"
@@ -95,6 +97,16 @@ export default function EditCourse({
 								placeholder="Inserisci la descrizione"
 								value={description}
 								onChange={(e) => setDescription(e.target.value)}
+							/>
+						</Form.Group>
+
+						<Form.Group controlId="formCourseId" className="mt-3">
+							<Form.Label>ID Corso</Form.Label>
+							<Form.Control
+								type="text"
+								placeholder="ID Corso"
+								value={courseId}
+								disabled
 							/>
 						</Form.Group>
 					</Form>

@@ -1,33 +1,36 @@
 import React, { useState } from "react"
 import { Alert, Button, Modal } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 
-interface DeleteUserProps {
-	userId: number
+interface DeleteFileProps {
+	fileId: number
 }
 
-const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
+const DeleteFile: React.FC<DeleteFileProps> = ({ fileId }) => {
 	const [showModal, setShowModal] = useState(false)
 	const [isDeleting, setIsDeleting] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
+	const navigate = useNavigate() // Hook per la navigazione
+
 	const handleDelete = async () => {
 		setIsDeleting(true)
 		try {
-			const response = await fetch(`${BASE_URL_API}/users/${userId}`, {
+			const response = await fetch(`${BASE_URL_API}/files/${fileId}`, {
 				method: "DELETE",
-				credentials: "include", // Includi i cookie nella richiesta
+				credentials: "include", // Include cookies in the request
 			})
 
 			if (!response.ok) {
-				throw new Error("Errore durante l'eliminazione dell'utente")
+				throw new Error("Errore durante l'eliminazione del file")
 			}
 
 			// Gestisci il successo dell'eliminazione, ad esempio reindirizzando l'utente
-			// o aggiornando la lista degli utenti. In questo caso, semplicemente chiudiamo il modal.
+			// o aggiornando la lista dei file. In questo caso, semplicemente chiudiamo il modal.
 			setShowModal(false)
-			window.location.reload() // Ricarica la pagina per aggiornare l'elenco degli utenti
+			navigate(-1)
 		} catch (err: any) {
 			setError(err.message)
 		} finally {
@@ -38,8 +41,8 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
 	return (
 		<>
 			<Button variant="danger" onClick={() => setShowModal(true)}>
-				Elimina Utente
-			</Button>{" "}
+				Elimina File
+			</Button>
 			<Modal show={showModal} onHide={() => setShowModal(false)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Conferma Eliminazione</Modal.Title>
@@ -47,18 +50,11 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
 				<Modal.Body>
 					{error && <p style={{ color: "red" }}>{error}</p>}
 					<p>
-						Sei sicuro di voler eliminare l'utente con ID{" "}
-						<strong>{userId}</strong>? <p></p>
+						Sei sicuro di voler eliminare il file con ID{" "}
+						<strong>{fileId}</strong>? <p></p>
 						<Alert variant="warning">
-							Se l'utente che si sta eliminando è un{" "}
-							<strong>professore</strong>, verranno anche
-							eliminati i relativi corsi, iscrizoni, file e
-							recensioni a cascata!{" "}
-						</Alert>
-						<Alert variant="warning">
-							Se l'utente è uno <strong>studente</strong>,
-							verranno eliminate anche le sue iscrizioni e le sue
-							iscrizioni a cascata!
+							Verranno anche eliminate le recensioni relative a
+							questo file!
 						</Alert>
 						<Alert variant="danger">
 							<strong>
@@ -87,4 +83,4 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
 	)
 }
 
-export default DeleteUser
+export default DeleteFile

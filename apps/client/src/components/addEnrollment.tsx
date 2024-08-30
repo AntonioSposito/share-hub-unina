@@ -88,17 +88,19 @@ export default function AddEnrollment({ courseId }: AddEnrollmentProps) {
 
 	return (
 		<div>
-			<Button
-				variant="outline-success"
-				onClick={handleEnrollment}
-				disabled={isLoading || isEnrolled}
-			>
-				{isEnrolled
-					? "Iscritto"
-					: isLoading
-						? "Loading..."
-						: "Iscriviti"}
-			</Button>
+			<div>
+				<Button
+					variant="outline-success"
+					onClick={handleEnrollment}
+					disabled={isLoading || isEnrolled}
+				>
+					{isEnrolled
+						? "Iscritto"
+						: isLoading
+							? "Loading..."
+							: "Iscriviti"}
+				</Button>
+			</div>
 			{error && <p className="text-danger mt-2">{error}</p>}
 		</div>
 	)

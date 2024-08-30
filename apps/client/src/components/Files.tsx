@@ -5,9 +5,11 @@ import AddFile from "./addFile"
 import { UserContext } from "../contexts/UserContext"
 import AddReview from "./addReview"
 import StarRating from "./StarRating"
+import DeleteFile from "./DeleteFile"
+import EditFile from "./EditFile"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
-const BASE_URL = import.meta.env.VITE_FRONTEND_URL
+// const BASE_URL = import.meta.env.VITE_FRONTEND_URL
 
 interface File {
 	id: number
@@ -86,7 +88,7 @@ export default function FIles() {
 			<div>
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/enrollment.png"}
+						src={"/file.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -101,7 +103,11 @@ export default function FIles() {
 						</tr>
 						<tr>
 							<td>Corso</td>
-							<td>{file.courseId}</td>
+							<td>
+								<a href={`/courses/${file.courseId}`}>
+									{file.courseId}
+								</a>
+							</td>
 						</tr>
 						<tr>
 							<td>Nome file</td>
@@ -113,10 +119,59 @@ export default function FIles() {
 						</tr>
 						<tr>
 							<td>Valutazione media</td>
-							<td>{file.avgRating}</td>
+							<td>
+								{file.avgRating > 0 ? (
+									<>
+										<StarRating rating={file.avgRating} />(
+										{file.avgRating})
+									</>
+								) : (
+									"Nessuna recensione :("
+								)}
+							</td>
+						</tr>
+						<tr>
+							<td>Download</td>
+							<td>
+								<Button
+									href={"/download?fileId=" + file.id}
+									variant="outline-success"
+								>
+									Download
+								</Button>
+							</td>
+						</tr>
+						<tr>
+							<td>Recensioni</td>
+							<td>
+								<Button
+									href={"/reviews?fileId=" + file.id}
+									variant="outline-success"
+									disabled={file.avgRating <= 0}
+								>
+									Recensioni
+								</Button>
+							</td>
+						</tr>
+						<tr>
+							<td>Recensisci</td>
+							<td>
+								{(user.role === "Student" ||
+									user.role === "Admin") && (
+									<AddReview fileId={file.id} />
+								)}
+							</td>
 						</tr>
 					</tbody>
 				</Table>
+				<EditFile
+					fileId={file.id}
+					courseId={file.courseId}
+					currentDescription={file.description}
+					currentName={file.name}
+					onFileUpdated={() => window.location.reload()}
+				></EditFile>
+				<DeleteFile fileId={file.id} />
 			</div>
 		)
 	}
@@ -126,7 +181,7 @@ export default function FIles() {
 			<div className="tutorial">
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/file.png"}
+						src={"/file.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -154,12 +209,25 @@ export default function FIles() {
 				<tbody>
 					{files.map((file) => (
 						<tr key={file.id}>
-							<td>{file.id}</td>
-							<td>{file.courseId}</td>
+							<td>
+								<div className="d-grid gap-2">
+									<Button
+										href={`/files/${file.id}`}
+										variant="outline-primary"
+									>
+										{file.id}
+									</Button>
+								</div>
+							</td>
+							<td>
+								<a href={`/courses/${file.courseId}`}>
+									{file.courseId}
+								</a>
+							</td>
 							<td>{file.name}</td>
 							<td>{file.description}</td>
 							<td>
-								{file.avgRating !== -1 ? (
+								{file.avgRating > 0 ? (
 									<>
 										<StarRating rating={file.avgRating} />(
 										{file.avgRating})
@@ -169,17 +237,25 @@ export default function FIles() {
 								)}
 							</td>
 							<td>
-								<Button href="#" variant="outline-success">
-									Download
-								</Button>
+								<div className="d-grid gap-2">
+									<Button
+										href={"/download?fileId=" + file.id}
+										variant="outline-success"
+									>
+										Download
+									</Button>
+								</div>
 							</td>
 							<td>
-								<Button
-									href={"/reviews?fileId=" + file.id}
-									variant="outline-success"
-								>
-									Recensioni
-								</Button>
+								<div className="d-grid gap-2">
+									<Button
+										href={"/reviews?fileId=" + file.id}
+										variant="outline-success"
+										disabled={file.avgRating <= 0}
+									>
+										Recensioni
+									</Button>
+								</div>
 							</td>
 							<td>
 								{(user.role === "Student" ||

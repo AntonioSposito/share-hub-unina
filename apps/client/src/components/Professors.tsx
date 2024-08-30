@@ -61,7 +61,7 @@ export default function Demo() {
 			<div className="tutorial">
 				<Container className="d-flex align-items-center mb-4">
 					<img
-						src={"../../public/teacher.png"}
+						src={"/teacher.png"}
 						alt="Share-hub unina Logo"
 						className="me-3"
 						style={{ width: "60px", height: "60px" }}
@@ -95,21 +95,28 @@ export default function Demo() {
 					{filteredUsers.map((user) => (
 						<tr key={user.id}>
 							<td>
-								<a href={BASE_URL + "/users/" + user.id}>
-									{user.id}
-								</a>
+								<div className="d-grid gap-2">
+									<Button
+										href={`${BASE_URL}/users/${user.id}`}
+										variant="outline-primary"
+									>
+										{user.id}
+									</Button>
+								</div>
 							</td>
 							<td>{user.name}</td>
 							<td>{user.lastname}</td>
 							<td>{user.email}</td>
 							<td>{user.role}</td>
 							<td>
-								<Button
-									href={"/courses?userId=" + user.id}
-									variant="outline-success"
-								>
-									Corsi
-								</Button>
+								<div className="d-grid gap-2">
+									<Button
+										href={"/courses?userId=" + user.id}
+										variant="outline-success"
+									>
+										Corsi
+									</Button>
+								</div>
 							</td>
 						</tr>
 					))}
