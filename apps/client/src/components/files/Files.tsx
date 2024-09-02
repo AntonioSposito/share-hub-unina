@@ -1,15 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
-import { useLocation, useParams } from "react-router-dom" // Aggiungi import
-import AddFile from "./addFile"
-import { UserContext } from "../contexts/UserContext"
-import AddReview from "./addReview"
-import StarRating from "./StarRating"
+import { useLocation, useParams } from "react-router-dom"
+import AddFile from "./AddFile"
+import { UserContext } from "../../contexts/UserContext"
+import StarRating from "../StarRating"
 import DeleteFile from "./DeleteFile"
 import EditFile from "./EditFile"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
-// const BASE_URL = import.meta.env.VITE_FRONTEND_URL
 
 interface File {
 	id: number
@@ -20,23 +18,28 @@ interface File {
 	courseId: number
 }
 
-export default function FIles() {
+interface Course {
+	id: number
+	title: string
+	description: string
+	userId: number
+}
+
+export default function Files() {
 	const { user } = useContext(UserContext)
 	const { id } = useParams<{ id?: string }>()
-	const { search } = useLocation() // Ottieni la query string
+	const { search } = useLocation()
 	const [error, setError] = useState<any>()
 	const [isLoading, setIsLoading] = useState(false)
-	const [showAddCourseForm, setShowAddCourseForm] = useState(false) // Stato per la visibilità del form
 	const [files, setFiles] = useState<File[]>([])
 	const [file, setFile] = useState<File | null>(null)
+	const [course, setCourse] = useState<Course | null>(null)
 
-	// Gestione della query string
 	const queryParams = new URLSearchParams(search)
 	const courseId = queryParams.get("courseId")
-	const courseIdNumber = courseId ? parseInt(courseId, 10) : null
 
 	useEffect(() => {
-		const fetchCourses = async () => {
+		const fetchFiles = async () => {
 			setIsLoading(true)
 			let url = BASE_URL_API + "/files/"
 
@@ -49,7 +52,7 @@ export default function FIles() {
 			try {
 				const response = await fetch(url, {
 					method: "GET",
-					credentials: "include", // Includi i cookie nella richiesta
+					credentials: "include",
 				})
 				if (!response.ok) {
 					throw new Error("Network response was not ok")
@@ -68,8 +71,31 @@ export default function FIles() {
 			}
 		}
 
-		fetchCourses()
-	}, [id, search])
+		const fetchCourse = async () => {
+			if (courseId) {
+				try {
+					const response = await fetch(
+						`${BASE_URL_API}/courses/${courseId}`,
+						{
+							method: "GET",
+							credentials: "include",
+						}
+					)
+					if (response.ok) {
+						const course = (await response.json()) as Course
+						setCourse(course)
+					} else {
+						throw new Error("Failed to fetch course")
+					}
+				} catch (error) {
+					console.error("Errore nel recupero del corso:", error)
+				}
+			}
+		}
+
+		fetchFiles()
+		fetchCourse()
+	}, [id, search, user.id, user.role])
 
 	if (isLoading) {
 		return (
@@ -153,15 +179,6 @@ export default function FIles() {
 								</Button>
 							</td>
 						</tr>
-						<tr>
-							<td>Recensisci</td>
-							<td>
-								{(user.role === "Student" ||
-									user.role === "Admin") && (
-									<AddReview fileId={file.id} />
-								)}
-							</td>
-						</tr>
 					</tbody>
 				</Table>
 				<EditFile
@@ -170,7 +187,7 @@ export default function FIles() {
 					currentDescription={file.description}
 					currentName={file.name}
 					onFileUpdated={() => window.location.reload()}
-				></EditFile>
+				/>
 				<DeleteFile fileId={file.id} />
 			</div>
 		)
@@ -251,40 +268,22 @@ export default function FIles() {
 									<Button
 										href={"/reviews?fileId=" + file.id}
 										variant="outline-success"
-										disabled={file.avgRating <= 0}
 									>
 										Recensioni
 									</Button>
 								</div>
 							</td>
-							<td>
-								{(user.role === "Student" ||
-									user.role === "Admin") && (
-									<AddReview fileId={file.id} />
-								)}
-							</td>
 						</tr>
 					))}
 				</tbody>
 			</Table>
-			{courseId &&
-				(user.role === "Professor" || user.role === "Admin") && (
-					<>
-						<Button
-							variant="primary"
-							onClick={() =>
-								setShowAddCourseForm(!showAddCourseForm)
-							} // Alterna la visibilità del form
-						>
-							{showAddCourseForm
-								? "Nascondi form"
-								: "Aggiungi File"}
-						</Button>
-						{showAddCourseForm && (
-							<AddFile courseId={courseIdNumber || 0}></AddFile>
-						)}
-					</>
-				)}
+
+			{((user.role === "Admin" && courseId) ||
+				(user.role === "Professor" &&
+					courseId &&
+					user.id === course?.userId)) && (
+				<AddFile courseId={+courseId} />
+			)}
 		</>
 	)
 }

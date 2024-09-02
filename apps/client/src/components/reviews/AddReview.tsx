@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
-import { Button, Form } from "react-bootstrap"
-import { UserContext } from "../contexts/UserContext"
+import { Button, Form, Modal } from "react-bootstrap"
+import { UserContext } from "../../contexts/UserContext"
 
 interface AddReviewProps {
 	fileId: number
@@ -13,7 +13,7 @@ export default function AddReview({ fileId }: AddReviewProps) {
 	const [error, setError] = useState<string | null>(null)
 	const [successMessage, setSuccessMessage] = useState<string | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
-	const [isFormVisible, setIsFormVisible] = useState(false)
+	const [showModal, setShowModal] = useState(false) // Stato per il modal
 	const [hasReviewed, setHasReviewed] = useState(false)
 
 	useEffect(() => {
@@ -84,6 +84,7 @@ export default function AddReview({ fileId }: AddReviewProps) {
 			setText("")
 			setRating(null)
 			setHasReviewed(true) // Disable the form after successful submission
+			setShowModal(false) // Chiudi il modal dopo l'invio
 		} catch (err: any) {
 			setError(err.message)
 		} finally {
@@ -91,66 +92,73 @@ export default function AddReview({ fileId }: AddReviewProps) {
 		}
 	}
 
-	const toggleFormVisibility = () => {
-		setIsFormVisible(!isFormVisible)
-	}
+	const handleClose = () => setShowModal(false)
+	const handleShow = () => setShowModal(true)
 
 	return (
 		<div>
 			<Button
-				variant="outline-success"
-				onClick={toggleFormVisibility}
+				variant="primary"
+				onClick={handleShow}
 				disabled={hasReviewed} // Disable the button if the user has already reviewed
 			>
-				{hasReviewed
-					? "Hai già recensito"
-					: isFormVisible
-						? "Nascondi"
-						: "Aggiungi recensione"}
+				{hasReviewed ? "Hai già recensito" : "Aggiungi recensione"}
 			</Button>
 
-			{isFormVisible && !hasReviewed && (
-				<Form onSubmit={handleSubmit} className="mt-3">
-					<Form.Group controlId="reviewText">
-						<Form.Label>Testo recensione</Form.Label>
-						<Form.Control
-							as="textarea"
-							rows={3}
-							value={text}
-							onChange={(e) => setText(e.target.value)}
-							required
-						/>
-					</Form.Group>
+			<Modal show={showModal} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Aggiungi una recensione</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form onSubmit={handleSubmit}>
+						<Form.Group controlId="reviewText">
+							<Form.Label>Testo recensione</Form.Label>
+							<Form.Control
+								as="textarea"
+								rows={3}
+								value={text}
+								onChange={(e) => setText(e.target.value)}
+								required
+							/>
+						</Form.Group>
 
-					<Form.Group controlId="reviewRating" className="mt-3">
-						<Form.Label>Voto (1-5)</Form.Label>
-						<Form.Control
-							type="number"
-							min="1"
-							max="5"
-							value={rating || ""}
-							onChange={(e) =>
-								setRating(parseInt(e.target.value, 10))
-							}
-							required
-						/>
-					</Form.Group>
+						<Form.Group controlId="reviewRating" className="mt-3">
+							<Form.Label>Voto (1-5)</Form.Label>
+							<Form.Control
+								type="number"
+								min="1"
+								max="5"
+								value={rating || ""}
+								onChange={(e) =>
+									setRating(parseInt(e.target.value, 10))
+								}
+								required
+							/>
+						</Form.Group>
 
-					{error && <p className="text-danger mt-3">{error}</p>}
-					{successMessage && (
-						<p className="text-success mt-3">{successMessage}</p>
-					)}
+						{error && <p className="text-danger mt-3">{error}</p>}
+						{successMessage && (
+							<p className="text-success mt-3">
+								{successMessage}
+							</p>
+						)}
 
-					<Button
-						type="submit"
-						variant="primary"
-						className="mt-3"
-						disabled={isLoading}
-					>
-						{isLoading ? "Submitting..." : "Submit Review"}
+						<Button
+							type="submit"
+							variant="primary"
+							className="mt-3"
+							disabled={isLoading}
+						>
+							{isLoading ? "Invio..." : "Invia recensione"}
+						</Button>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose}>
+						Chiudi
 					</Button>
-				</Form>
-			)}
+				</Modal.Footer>
+			</Modal>
 		</div>
 	)
 }

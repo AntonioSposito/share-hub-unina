@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 import DeleteUser from "./DeleteUser"
 import EditUser from "./EditUser"
+import { UserContext } from "../../contexts/UserContext"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -25,8 +26,10 @@ export default function Demo({ userIdProp }: DemoProps) {
 	const [error, setError] = useState<any>()
 	const [isLoading, setIsLoading] = useState(false)
 	const [users, setUsers] = useState<User[]>([])
-	const [user, setUser] = useState<User | null>(null)
+	const [userState, setUserState] = useState<User | null>(null)
 	const roleOrder = { Admin: 1, Professor: 2, Student: 3 }
+
+	const { user } = useContext(UserContext)
 
 	function getRoleOrder(role: string): number {
 		return roleOrder[role as keyof typeof roleOrder] || 4 // 4 come valore di fallback
@@ -47,11 +50,13 @@ export default function Demo({ userIdProp }: DemoProps) {
 					credentials: "include", // Includi i cookie nella richiesta
 				})
 				if (!response.ok) {
-					throw new Error("Network response was not ok")
+					throw new Error(
+						`Error ${response.status}: ${response.statusText}`
+					)
 				}
 				if (id) {
 					const user = (await response.json()) as User
-					setUser(user)
+					setUserState(user)
 				} else {
 					let users = (await response.json()) as User[]
 
@@ -63,7 +68,7 @@ export default function Demo({ userIdProp }: DemoProps) {
 					setUsers(users)
 				}
 			} catch (e: any) {
-				setError(e)
+				setError(e.message)
 			} finally {
 				setIsLoading(false)
 			}
@@ -81,15 +86,15 @@ export default function Demo({ userIdProp }: DemoProps) {
 	}
 
 	if (error) {
-		return <div>Something went wrong, please try again</div>
+		return <div>{error}</div>
 	}
 
-	if (id && user) {
+	if (id && userState) {
 		// Visualizza i dettagli di un singolo utente
 		return (
 			<div>
 				<Container className="d-flex align-items-center mb-4">
-					{user.role === "Professor" && (
+					{userState.role === "Professor" && (
 						<>
 							<img
 								src={"/teacher.png"}
@@ -100,7 +105,7 @@ export default function Demo({ userIdProp }: DemoProps) {
 							<h2 className="text-2xl">Dettagli professore:</h2>
 						</>
 					)}
-					{user.role === "Student" && (
+					{userState.role === "Student" && (
 						<>
 							<img
 								src={"/student.png"}
@@ -116,30 +121,30 @@ export default function Demo({ userIdProp }: DemoProps) {
 					<tbody>
 						<tr>
 							<td>Id utente</td>
-							<td>{user.id}</td>
+							<td>{userState.id}</td>
 						</tr>
 						<tr>
 							<td>Nome</td>
-							<td>{user.name}</td>
+							<td>{userState.name}</td>
 						</tr>
 						<tr>
 							<td>Cognome</td>
-							<td>{user.lastname}</td>
+							<td>{userState.lastname}</td>
 						</tr>
 						<tr>
 							<td>Email</td>
-							<td>{user.email}</td>
+							<td>{userState.email}</td>
 						</tr>
 						<tr>
 							<td>Ruolo</td>
-							<td>{user.role}</td>
+							<td>{userState.role}</td>
 						</tr>
-						{user.role === "Professor" && (
+						{userState.role === "Professor" && (
 							<tr>
 								<td>Corsi</td>
 								<td>
 									<Button
-										href={`${BASE_URL}/courses?userId=${user.id}`}
+										href={`${BASE_URL}/courses?userId=${userState.id}`}
 										variant="outline-success"
 									>
 										Corsi
@@ -147,13 +152,13 @@ export default function Demo({ userIdProp }: DemoProps) {
 								</td>
 							</tr>
 						)}
-						{user.role === "Student" && (
+						{userState.role === "Student" && (
 							<>
 								<tr>
 									<td>Iscrizioni</td>
 									<td>
 										<Button
-											href={`${BASE_URL}/enrollments?userId=${user.id}`}
+											href={`${BASE_URL}/enrollments?userId=${userState.id}`}
 											variant="outline-success"
 										>
 											Iscrizioni
@@ -164,7 +169,7 @@ export default function Demo({ userIdProp }: DemoProps) {
 									<td>Recensioni</td>
 									<td>
 										<Button
-											href={`${BASE_URL}/reviews?userId=${user.id}`}
+											href={`${BASE_URL}/reviews?userId=${userState.id}`}
 											variant="outline-success"
 										>
 											Recensioni
@@ -175,16 +180,19 @@ export default function Demo({ userIdProp }: DemoProps) {
 						)}
 					</tbody>
 				</Table>
-
-				<EditUser
-					userId={user.id}
-					onUserUpdated={() => window.location.reload()}
-					currentName={user.name}
-					currentLastname={user.lastname}
-					currentEmail={user.email}
-					currentRole={user.role}
-				/>
-				<DeleteUser userId={user.id} />
+				{(user.id === userState.id || user.role === "Admin") && (
+					<>
+						<EditUser
+							userId={userState.id}
+							onUserUpdated={() => window.location.reload()}
+							currentName={userState.name}
+							currentLastname={userState.lastname}
+							currentEmail={userState.email}
+							currentRole={userState.role}
+						/>
+						<DeleteUser userId={userState.id} />
+					</>
+				)}
 			</div>
 		)
 	}

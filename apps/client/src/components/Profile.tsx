@@ -1,49 +1,21 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { UserContext } from "../contexts/UserContext"
-import Button from "react-bootstrap/Button"
 import { useNavigate } from "react-router-dom"
 import { Col, Container, Row } from "react-bootstrap"
-import Courses from "./Courses"
-import Users from "./Users"
-import Enrollments from "./Enrollments"
-import Files from "./Files"
-import Reviews from "./Reviews"
-import Professors from "./Professors"
-import Students from "./Students"
-import AddCourse from "./addCourse"
+import Courses from "./courses/Courses"
+import Users from "./users/Users"
+import Enrollments from "./enrollments/Enrollments"
+import Files from "./files/Files"
+import Reviews from "./reviews/Reviews"
+import Professors from "./users/Professors"
+import Students from "./users/Students"
+import LogoutButton from "./auth/LogoutButton"
 
-const BASE_URL = import.meta.env.VITE_FRONTEND_URL
+// const BASE_URL = import.meta.env.VITE_FRONTEND_URL
 
 function Profilo() {
-	const { user, setUser } = useContext(UserContext)
+	const { user } = useContext(UserContext)
 	const navigate = useNavigate()
-	const [showAddCourseForm, setShowAddCourseForm] = useState(false) // Stato per la visibilità del form
-
-	// Funzione per gestire il logout
-	const handleLogout = async () => {
-		try {
-			// Esegui una richiesta GET a /api/auth/signout
-			const response = await fetch("/api/auth/signout", {
-				method: "GET",
-				credentials: "include", // Invia i cookie insieme alla richiesta, se necessario
-			})
-
-			if (response.ok) {
-				// Se la richiesta ha successo, reimposta lo stato dell'utente
-				setUser({
-					id: -1,
-					email: "prova@dominio.it",
-					role: "NESSUN_RUOLO",
-				})
-				// Rimuove l'utente dal sessionStorage
-				sessionStorage.removeItem("user")
-			} else {
-				console.error("Logout fallito:", response.statusText)
-			}
-		} catch (error) {
-			console.error("Errore durante il logout:", error)
-		}
-	}
 
 	// Verifica l'ID utente e reindirizza a /login se non è loggato
 	useEffect(() => {
@@ -66,19 +38,6 @@ function Profilo() {
 				return (
 					<>
 						<Courses userId={user.id}></Courses>
-						<Button
-							variant="primary"
-							onClick={() =>
-								setShowAddCourseForm(!showAddCourseForm)
-							} // Alterna la visibilità del form
-						>
-							{showAddCourseForm
-								? "Nascondi form"
-								: "Aggiungi Corso"}
-						</Button>
-						{showAddCourseForm && (
-							<AddCourse userId={user.id}></AddCourse>
-						)}
 					</>
 				)
 			case "Admin":
@@ -117,9 +76,7 @@ function Profilo() {
 				</Row>
 			</Container>
 			<br />
-			<Button variant="danger" onClick={handleLogout}>
-				Logout
-			</Button>
+			<LogoutButton />
 		</>
 	)
 }

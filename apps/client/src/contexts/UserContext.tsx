@@ -26,6 +26,8 @@ const defaultState = {
 		id: -1,
 		email: "prova@dominio.it",
 		role: "NESSUN_RUOLO",
+		name: "NESSUN_NOME",
+		lastname: "NESSUN_COGNOME",
 	},
 	setUser: (_user: User) => {},
 } as UserContextInterface
@@ -47,6 +49,8 @@ export default function UserProvider({ children }: UserProviderProps) {
 					id: -1,
 					email: "prova@dominio.it",
 					role: "NESSUN_RUOLO",
+					name: "NESSUN_NOME",
+					lastname: "NESSUN_COGNOME",
 				}
 	})
 

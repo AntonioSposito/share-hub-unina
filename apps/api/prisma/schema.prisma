@@ -39,7 +39,7 @@ model Course {
   createdAt   DateTime     @default(now())
   modifiedAt  DateTime     @updatedAt
   userId      Int //FK per User professore
-  User        User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   files       File[]
   enrollments Enrollment[]
 
@@ -51,7 +51,7 @@ model File {
   name         String
   description  String?  @default("Dammi una descrizione!")
   path         String?  @default("Dammi/un/path!")
-  avgRating Float?
+  avgRating    Float?
   createdAt    DateTime @default(now())
   modifiedAt   DateTime @updatedAt
   courseId     Int //FK per corso

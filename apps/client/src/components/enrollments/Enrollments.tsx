@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
 import DeleteEnrollment from "./DeleteEnrollment"
+import { UserContext } from "../../contexts/UserContext"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -24,6 +25,8 @@ export default function Enrollments({ userId: propUserId }: EnrollmentsProps) {
 	const [enrollment, setEnrollment] = useState<Enrollment | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
+
+	const { user } = useContext(UserContext)
 
 	// Estrai i parametri di query dalla stringa di ricerca
 	const queryParams = new URLSearchParams(search)
@@ -163,6 +166,11 @@ export default function Enrollments({ userId: propUserId }: EnrollmentsProps) {
 								<Button
 									href={`/enrollments/${enrollment.id}`}
 									variant="outline-primary"
+									disabled={
+										user.role === "Professor" ||
+										(user.role === "Student" &&
+											user.id != enrollment.userId)
+									}
 								>
 									{enrollment.id}
 								</Button>

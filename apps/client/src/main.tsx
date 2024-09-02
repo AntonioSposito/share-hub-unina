@@ -11,19 +11,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 //document.body.style.padding = "30px" // Aggiungi padding al body
 
 import Home from "./components/Home.tsx"
-import LoginForm from "./components/LoginForm.tsx"
-import RegistrationForm from "./components/RegistrationForm.tsx"
-import Users from "./components/Users.tsx"
+import LoginForm from "./components/auth/LoginForm.tsx"
+import RegistrationForm from "./components/auth/RegistrationForm.tsx"
+import Users from "./components/users/Users.tsx"
 import Navbar from "./components/Navbar.tsx"
 import Footer from "./components/Footer.tsx"
 import NotFoundPage from "./components/NotFoundPage.tsx"
-import Courses from "./components/Courses.tsx"
+import Courses from "./components/courses/Courses.tsx"
 import Profile from "./components/Profile.tsx"
-import Professors from "./components/Professors.tsx"
-import Students from "./components/Students.tsx"
-import Enrollments from "./components/Enrollments.tsx"
-import Files from "./components/Files.tsx"
-import Reviews from "./components/Reviews.tsx"
+import Professors from "./components/users/Professors.tsx"
+import Students from "./components/users/Students.tsx"
+import Enrollments from "./components/enrollments/Enrollments.tsx"
+import Files from "./components/files/Files.tsx"
+import Reviews from "./components/reviews/Reviews.tsx"
 
 import UserProvider from "./contexts/UserContext.tsx"
 
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 	{ path: "/home", element: <Home /> },
 	{ path: "/login", element: <LoginForm /> },
 	{ path: "/registration", element: <RegistrationForm /> },
-	{ path: "/users", element: <Users /> },
+	{ path: "/users", element: <Users /> }, //Accessibile solo agli admin
 	{ path: "/users/:id", element: <Users /> },
 	{ path: "/courses", element: <Courses /> },
 	{ path: "/courses/:id", element: <Courses /> },
@@ -50,7 +50,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<UserProvider>
-			<body className="d-flex flex-column min-vh-100">
+			<body
+				className="d-flex flex-column min-vh-100"
+				data-bs-theme="light"
+			>
 				<Navbar />
 
 				<Container>

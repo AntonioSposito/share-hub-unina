@@ -24,7 +24,9 @@ export default function Demo() {
 			setIsLoading(true)
 			const url = BASE_URL_API + "/users/"
 			try {
-				const response = await fetch(url)
+				const response = await fetch(url, {
+					credentials: "include", // Includi i cookie nella richiesta
+				})
 				const users = (await response.json()) as User[]
 				setUsers(users)
 			} catch (e: any) {

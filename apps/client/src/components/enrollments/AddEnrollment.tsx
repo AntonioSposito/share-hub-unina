@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { Button } from "react-bootstrap"
-import { UserContext } from "../contexts/UserContext" // Adjust the import path as necessary
+import { UserContext } from "../../contexts/UserContext" // Adjust the import path as necessary
+
+const BASE_URL_API = import.meta.env.VITE_API_URL
 
 interface AddEnrollmentProps {
 	courseId: number
@@ -22,7 +24,7 @@ export default function AddEnrollment({ courseId }: AddEnrollmentProps) {
 
 			try {
 				const response = await fetch(
-					`${import.meta.env.VITE_API_URL}/enrollments?courseId=${courseId}&userId=${user.id}`,
+					`${BASE_URL_API}/enrollments?courseId=${courseId}&userId=${user.id}`,
 					{
 						method: "GET",
 						credentials: "include",
@@ -79,6 +81,7 @@ export default function AddEnrollment({ courseId }: AddEnrollmentProps) {
 			}
 
 			setIsEnrolled(true)
+			//window.location.reload()
 		} catch (err: any) {
 			setError(err.message)
 		} finally {

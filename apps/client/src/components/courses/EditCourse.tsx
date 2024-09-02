@@ -1,62 +1,67 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 
-interface EditFileProps {
-	fileId: number
-	onFileUpdated: () => void
-	currentDescription: string // Descrizione corrente del file
-	currentName: string // Nome corrente del file
-	courseId: number // ID del corso (non modificabile)
+interface EditCourseProps {
+	courseId: number
+	onCourseUpdated: () => void
+	currentTitle: string
+	currentDescription: string
+	currentUserId: number // Aggiunto per gestire l'userId corrente
 }
 
-export default function EditFile({
-	fileId,
-	onFileUpdated,
-	currentDescription,
-	currentName,
+export default function EditCourse({
 	courseId,
-}: EditFileProps) {
+	onCourseUpdated,
+	currentTitle,
+	currentDescription,
+	currentUserId, // Aggiunto userId
+}: EditCourseProps) {
 	const [show, setShow] = useState(false)
+	const [title, setTitle] = useState(currentTitle)
 	const [description, setDescription] = useState(currentDescription)
-	const [name, setName] = useState(currentName)
+	const [userId, setUserId] = useState(currentUserId) // Stato per userId
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
 
 	const handleClose = () => setShow(false)
 	const handleShow = () => setShow(true)
 
-	// Aggiorna il form con i dati correnti del file ogni volta che si apre il modal
 	useEffect(() => {
 		if (show) {
+			setTitle(currentTitle)
 			setDescription(currentDescription)
-			setName(currentName)
+			setUserId(currentUserId) // Aggiorna lo stato di userId quando il modal si apre
 		}
-	}, [show, currentDescription, currentName])
+	}, [show, currentTitle, currentDescription, currentUserId])
 
 	const handleSave = async () => {
 		setIsLoading(true)
 		setError(null)
 
 		try {
-			const response = await fetch(`${BASE_URL_API}/files/${fileId}`, {
-				method: "PATCH",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				credentials: "include",
-				body: JSON.stringify({
-					description,
-					name,
-				}),
-			})
+			const response = await fetch(
+				`${BASE_URL_API}/courses/${courseId}`,
+				{
+					method: "PATCH",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					credentials: "include",
+					body: JSON.stringify({
+						title,
+						description,
+						userId, // Invia userId con la richiesta
+					}),
+				}
+			)
 
 			if (!response.ok) {
-				throw new Error("Errore durante l'aggiornamento del file")
+				throw new Error("Errore durante l'aggiornamento del corso")
 			}
 
-			onFileUpdated()
+			onCourseUpdated()
 			handleClose()
 		} catch (e: any) {
 			setError(e.message)
@@ -68,28 +73,25 @@ export default function EditFile({
 	return (
 		<>
 			<Button variant="primary" onClick={handleShow}>
-				Modifica File
+				Modifica Corso
 			</Button>{" "}
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Modifica File</Modal.Title>
+					<Modal.Title>Modifica Corso</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group controlId="formName">
-							<Form.Label>Nome del File</Form.Label>
+						<Form.Group controlId="formTitle">
+							<Form.Label>Titolo</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Inserisci il nome del file"
-								value={name}
-								onChange={(e) => setName(e.target.value)}
+								placeholder="Inserisci il titolo"
+								value={title}
+								onChange={(e) => setTitle(e.target.value)}
 							/>
 						</Form.Group>
 
-						<Form.Group
-							controlId="formDescription"
-							className="mt-3"
-						>
+						<Form.Group controlId="formDescription">
 							<Form.Label>Descrizione</Form.Label>
 							<Form.Control
 								as="textarea"
@@ -100,13 +102,16 @@ export default function EditFile({
 							/>
 						</Form.Group>
 
-						<Form.Group controlId="formCourseId" className="mt-3">
-							<Form.Label>ID Corso</Form.Label>
+						<Form.Group controlId="formUserId">
+							<Form.Label>User ID</Form.Label>
 							<Form.Control
-								type="text"
-								placeholder="ID Corso"
-								value={courseId}
+								type="number"
+								placeholder="Inserisci l'ID utente"
+								value={userId}
 								disabled
+								onChange={(e) =>
+									setUserId(Number(e.target.value))
+								}
 							/>
 						</Form.Group>
 					</Form>

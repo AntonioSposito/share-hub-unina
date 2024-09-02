@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Button, Container, Table } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
-import StarRating from "./StarRating"
+import StarRating from "../StarRating"
 import DeleteReview from "./DeleteReview"
 import EditReview from "./EditReview"
+import AddReview from "./AddReview"
+import { UserContext } from "../../contexts/UserContext"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL
 const BASE_URL = import.meta.env.VITE_FRONTEND_URL
@@ -27,6 +29,7 @@ export default function Reviews({ userId }: ReviewsProps) {
 	const [review, setReview] = useState<Review | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
+	const { user } = useContext(UserContext)
 
 	// Estrai i parametri di query dalla stringa di ricerca
 	const queryParams = new URLSearchParams(search)
@@ -181,6 +184,11 @@ export default function Reviews({ userId }: ReviewsProps) {
 									<Button
 										href={`/reviews/${review.id}`}
 										variant="outline-primary"
+										disabled={
+											user.role === "Professor" ||
+											(user.role === "Student" &&
+												review.userId != user.id)
+										}
 									>
 										{review.id}
 									</Button>
@@ -204,6 +212,9 @@ export default function Reviews({ userId }: ReviewsProps) {
 					))}
 				</tbody>
 			</Table>
+			{fileId && user.role != "Professor" && (
+				<AddReview fileId={+fileId}></AddReview>
+			)}
 		</>
 	)
 }

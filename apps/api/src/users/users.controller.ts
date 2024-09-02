@@ -13,9 +13,10 @@ import {
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
 import {
+  AdminGuard,
+  AdminOrProfessorGuard,
   AdminOrSelfGuard,
   JwtAuthGuard,
-  ProfessorGuard,
 } from 'src/auth/jwt/jwt.guard';
 
 @Controller('users')
@@ -27,12 +28,13 @@ export class UsersController {
   //   return this.usersService.create(createUserDto);
   // }
 
+  // @UseGuards(AdminGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  //@UseGuards(AdminOrSelfGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number, @Req() req) {
     return this.usersService.findOne(id, req);
