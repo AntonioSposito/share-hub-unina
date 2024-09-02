@@ -163,12 +163,6 @@ export class FilesService {
           courseId: (await foundFile).courseId,
         },
       });
-      // console.log(userId);
-      // console.log((await foundFile).courseId);
-      // console.log((await foundEnrollment).userId);
-      // console.log((await foundEnrollment).courseId);
-
-      console.log(await foundEnrollment);
 
       //Verifico se trovo l'iscrizione
       if (await foundEnrollment) {

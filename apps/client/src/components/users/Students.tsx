@@ -17,8 +17,6 @@ export default function Demo() {
 	const [isLoading, setIsLoading] = useState(false)
 	const [users, setUsers] = useState<User[]>([])
 
-	// console.log("API URL:", BASE_URL_API)
-	// console.log("FRONTEND URL:", BASE_URL)
 	useEffect(() => {
 		const fetchUsers = async () => {
 			setIsLoading(true)

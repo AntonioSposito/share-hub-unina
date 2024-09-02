@@ -11,7 +11,6 @@ const Breadcrumb = () => {
 		// const queryParams = new URLSearchParams(search)
 		// const urtUserId = queryParams.get("userId")
 		const breadcrumbItems = [{ name: "Home", to: "/" }]
-		console.log("Paths=" + paths)
 
 		if (paths.length > 0) {
 			switch (paths[0]) {

@@ -28,7 +28,6 @@ export class UsersController {
   //   return this.usersService.create(createUserDto);
   // }
 
-  // @UseGuards(AdminGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -49,7 +48,7 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @UseGuards(AdminOrSelfGuard)
+  @UseGuards(AdminGuard)
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.remove(id);

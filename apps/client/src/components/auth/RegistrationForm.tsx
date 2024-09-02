@@ -42,7 +42,6 @@ function RegisterForm() {
 				{ withCredentials: true } // Importante per inviare il cookie
 			)
 			console.log("Registration response:", response.data.user)
-
 			setSuccess(
 				"Registrazione avvenuta con successo! Reindirizzamento in corso..."
 			)

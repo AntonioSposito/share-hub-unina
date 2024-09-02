@@ -15,7 +15,6 @@ interface User {
 
 export default function Demo() {
 	const params = useParams()
-	//console.log(params)
 	const [error, setError] = useState<Error | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [user, setUser] = useState<User | null>(null)
@@ -24,7 +23,6 @@ export default function Demo() {
 		const fetchUser = async () => {
 			setIsLoading(true)
 			const url = BASE_URL_API + "/users/" + params.id
-			console.log(url)
 			try {
 				const response = await fetch(url, {
 					credentials: "include",

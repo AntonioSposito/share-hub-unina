@@ -15,9 +15,6 @@ export class CoursesService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(createCourseDto: CreateCourseDto, req: Request) {
-    console.log(createCourseDto.userId);
-    console.log(req.cookies.token);
-
     let decodedToken;
 
     try {
@@ -31,7 +28,6 @@ export class CoursesService {
         isProfessor: boolean;
         role: string;
       };
-      //console.log(id, email, isProfessor, role);
 
       //Se l'utente che sta creando il corso è professore l'userId del corso creato deve corrispondere con l'userId del professore che lo sta creando
       //Se l'utente è admin, può crearlo con l'userId che preferisce
@@ -42,8 +38,6 @@ export class CoursesService {
     } catch (err) {
       throw new ForbiddenException('Invalid token');
     }
-
-    //console.log(decodedToken);
 
     return this.prismaService.course.create({ data: createCourseDto });
   }

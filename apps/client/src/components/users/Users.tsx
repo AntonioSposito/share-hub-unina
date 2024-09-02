@@ -181,18 +181,16 @@ export default function Demo({ userIdProp }: DemoProps) {
 					</tbody>
 				</Table>
 				{(user.id === userState.id || user.role === "Admin") && (
-					<>
-						<EditUser
-							userId={userState.id}
-							onUserUpdated={() => window.location.reload()}
-							currentName={userState.name}
-							currentLastname={userState.lastname}
-							currentEmail={userState.email}
-							currentRole={userState.role}
-						/>
-						<DeleteUser userId={userState.id} />
-					</>
+					<EditUser
+						userId={userState.id}
+						onUserUpdated={() => window.location.reload()}
+						currentName={userState.name}
+						currentLastname={userState.lastname}
+						currentEmail={userState.email}
+						currentRole={userState.role}
+					/>
 				)}
+				{user.role === "Admin" && <DeleteUser userId={userState.id} />}
 			</div>
 		)
 	}

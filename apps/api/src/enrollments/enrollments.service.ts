@@ -73,7 +73,6 @@ export class EnrollmentsService {
             userId: id,
           },
         });
-        //console.log(await foundCourse);
         if ((await foundCourse) == null) {
           throw new ForbiddenException(
             'Access denied. You are not the ownser of this course, thus you cannot see its enrollments',
@@ -158,9 +157,6 @@ export class EnrollmentsService {
         id,
       },
     });
-
-    console.log((await foundEnrollment).userId);
-    console.log(userId);
 
     //questo controllo non fuzniona, un utente può eliminare le iscrizioni di altri utenti
     if (role === 'Student' && (await foundEnrollment).userId != userId) {

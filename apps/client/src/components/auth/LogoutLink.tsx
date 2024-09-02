@@ -2,7 +2,7 @@
 import React, { useContext } from "react"
 import { UserContext } from "../../contexts/UserContext"
 
-const LogoutButton: React.FC = () => {
+const LogoutLink: React.FC = () => {
 	const { setUser } = useContext(UserContext)
 
 	// Function to handle logout
@@ -32,7 +32,20 @@ const LogoutButton: React.FC = () => {
 		}
 	}
 
-	return <a onClick={handleLogout}>Logout</a>
+	return (
+		<button
+			onClick={handleLogout}
+			style={{
+				background: "none",
+				border: "none",
+				padding: 0,
+				textDecoration: "underline",
+				cursor: "pointer",
+			}}
+		>
+			Logout
+		</button>
+	)
 }
 
-export default LogoutButton
+export default LogoutLink

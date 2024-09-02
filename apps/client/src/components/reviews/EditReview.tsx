@@ -53,6 +53,8 @@ export default function EditReview({
 					body: JSON.stringify({
 						text,
 						rating,
+						userId,
+						fileId,
 					}),
 				}
 			)

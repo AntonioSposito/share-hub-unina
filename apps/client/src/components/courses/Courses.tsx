@@ -139,11 +139,16 @@ export default function Courses({ userId }: CoursesProps) {
 	}, [id, userId, urlUserId, user])
 
 	// Funzione per filtrare i corsi in base alla query di ricerca
-	const filteredCourses = courses.filter(
-		(course) =>
+	// Funzione per filtrare i corsi in base alla query di ricerca e searchId
+	const filteredCourses = courses.filter((course) => {
+		const searchId = searchQuery.trim() // rimuove eventuali spazi vuoti
+		const matchesId = course.id.toString().startsWith(searchId)
+		const matchesTitleOrDescription =
 			course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
 			course.description.toLowerCase().includes(searchQuery.toLowerCase())
-	)
+
+		return matchesId || matchesTitleOrDescription
+	})
 
 	// Funzione per ottenere il nome e il cognome del docente basato sull'ID
 	const getTeacherName = (userId: number) => {

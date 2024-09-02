@@ -41,7 +41,7 @@ export class UsersService {
       select: { id: true, name: true, lastname: true, email: true, role: true },
     });
 
-    if (!user) {
+    if ((await user) == null) {
       throw new NotFoundException();
     }
 

@@ -28,8 +28,6 @@ function LoginForm() {
 				},
 				{ withCredentials: true } // Importante per inviare il cookie
 			)
-			console.log("Login response:")
-			console.log(response.data.user)
 			setUser(response.data.user)
 			navigate("/profile")
 		} catch (error) {

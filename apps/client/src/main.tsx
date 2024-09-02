@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 	{ path: "/home", element: <Home /> },
 	{ path: "/login", element: <LoginForm /> },
 	{ path: "/registration", element: <RegistrationForm /> },
-	{ path: "/users", element: <Users /> }, //Accessibile solo agli admin
+	// { path: "/users", element: <Users /> }, //Accessibile solo agli admin
 	{ path: "/users/:id", element: <Users /> },
 	{ path: "/courses", element: <Courses /> },
 	{ path: "/courses/:id", element: <Courses /> },
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<UserProvider>
-			<body
+			<div
 				className="d-flex flex-column min-vh-100"
 				data-bs-theme="light"
 			>
@@ -67,7 +67,7 @@ createRoot(document.getElementById("root")!).render(
 					</Row>
 				</Container>
 				<Footer />
-			</body>
+			</div>
 		</UserProvider>
 	</StrictMode>
 )

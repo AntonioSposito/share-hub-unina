@@ -39,8 +39,6 @@ export class ProfessorStrategy extends PassportStrategy(Strategy, 'professor') {
 
   //Estraggo token jwt
   private static extractJWT(req: Request): string | null {
-    // const userId = req.params.userId
-    // console.log(userId)
     if (req.cookies && 'token' in req.cookies) {
       return req.cookies.token;
     }
@@ -75,8 +73,6 @@ export class AdminOrSelfStrategy extends PassportStrategy(
 
   //Estraggo token jwt
   private static extractJWT(req: Request): string | null {
-    // const id = req.params.id
-    // console.log(id)
     if (req.cookies && 'token' in req.cookies) {
       return req.cookies.token;
     }
@@ -87,8 +83,6 @@ export class AdminOrSelfStrategy extends PassportStrategy(
     req: Request,
     payload: { id: string; email: string; isProfessor: boolean; role: string },
   ) {
-    console.log(payload.role + ' ' + payload.id);
-    console.log(req.params.id);
     console.log('Guard usata:' + 'AdminOrSelfGuard');
 
     if (!req.params.id) throw new NotFoundException();
