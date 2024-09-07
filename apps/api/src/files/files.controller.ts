@@ -9,6 +9,7 @@ import {
   Query,
   UseGuards,
   Req,
+  UseInterceptors,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { Prisma } from '@prisma/client';
@@ -18,7 +19,10 @@ import {
   JwtAuthGuard,
 } from 'src/auth/jwt/jwt.guard';
 import { Request } from 'express';
+import { diskStorage } from 'multer';
 import { CreateFileDto, UpdateFileDto } from './dto/files.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { extname } from 'path';
 
 @Controller('files')
 export class FilesController {

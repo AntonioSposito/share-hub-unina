@@ -21,7 +21,7 @@ export default function Demo() {
 	useEffect(() => {
 		const fetchUsers = async () => {
 			setIsLoading(true)
-			const url = BASE_URL_API + "/users/"
+			const url = BASE_URL_API + "/users/professors"
 			try {
 				const response = await fetch(url, {
 					credentials: "include", // Includi i cookie nella richiesta
@@ -41,10 +41,9 @@ export default function Demo() {
 	// Funzione per filtrare gli utenti in base al termine di ricerca
 	const filteredUsers = users.filter(
 		(user) =>
-			user.role === "Professor" &&
-			(user.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				user.id.toString().includes(searchTerm))
+			user.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			user.id.toString().includes(searchTerm)
 	)
 
 	if (isLoading) {

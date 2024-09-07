@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto, UpdateCourseDto } from './dto/courses.dto';
-import { AdminOrProfessorGuard } from 'src/auth/jwt/jwt.guard';
+import { AdminOrProfessorGuard, JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
 
 @Controller('courses')
 export class CoursesController {
@@ -24,11 +24,13 @@ export class CoursesController {
     return this.coursesService.create(createCourseDto, req);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Query('userId') userId?: string) {
     return this.coursesService.findAll(+userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.coursesService.findOne(+id);

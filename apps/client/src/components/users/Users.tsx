@@ -29,7 +29,7 @@ export default function Demo({ userIdProp }: DemoProps) {
 	const [userState, setUserState] = useState<User | null>(null)
 	const roleOrder = { Admin: 1, Professor: 2, Student: 3 }
 
-	const { user } = useContext(UserContext)
+	const { user: userFromContext } = useContext(UserContext)
 
 	function getRoleOrder(role: string): number {
 		return roleOrder[role as keyof typeof roleOrder] || 4 // 4 come valore di fallback
@@ -180,7 +180,8 @@ export default function Demo({ userIdProp }: DemoProps) {
 						)}
 					</tbody>
 				</Table>
-				{(user.id === userState.id || user.role === "Admin") && (
+				{(userFromContext.id === userState.id ||
+					userFromContext.role === "Admin") && (
 					<EditUser
 						userId={userState.id}
 						onUserUpdated={() => window.location.reload()}
@@ -190,7 +191,9 @@ export default function Demo({ userIdProp }: DemoProps) {
 						currentRole={userState.role}
 					/>
 				)}
-				{user.role === "Admin" && <DeleteUser userId={userState.id} />}
+				{userFromContext.role === "Admin" && (
+					<DeleteUser userId={userState.id} />
+				)}
 			</div>
 		)
 	}

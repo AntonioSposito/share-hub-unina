@@ -28,12 +28,19 @@ export class UsersController {
   //   return this.usersService.create(createUserDto);
   // }
 
+  @UseGuards(AdminGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
+  @Get('/professors')
+  findAllProfessors() {
+    return this.usersService.findAllProfessors();
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number, @Req() req) {
     return this.usersService.findOne(id, req);
@@ -44,8 +51,9 @@ export class UsersController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateUserDto: Prisma.UserUpdateInput,
+    @Req() req,
   ) {
-    return this.usersService.update(id, updateUserDto);
+    return this.usersService.update(id, updateUserDto, req);
   }
 
   @UseGuards(AdminGuard)

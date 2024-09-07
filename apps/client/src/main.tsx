@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 	{ path: "/home", element: <Home /> },
 	{ path: "/login", element: <LoginForm /> },
 	{ path: "/registration", element: <RegistrationForm /> },
-	// { path: "/users", element: <Users /> }, //Accessibile solo agli admin
+	{ path: "/users", element: <Users /> }, //Accessibile solo agli admin
 	{ path: "/users/:id", element: <Users /> },
 	{ path: "/courses", element: <Courses /> },
 	{ path: "/courses/:id", element: <Courses /> },
@@ -43,8 +43,8 @@ const router = createBrowserRouter([
 	{ path: "/reviews", element: <Reviews /> },
 	{ path: "/reviews/:id", element: <Reviews /> },
 	{ path: "/profile", element: <Profile /> },
-	{ path: "/professors", element: <Professors /> }, //forse questo non deve essere accessibile direttamente
-	{ path: "/students", element: <Students /> }, //forse questo non deve essere accessibile direttamente
+	{ path: "/professors", element: <Professors /> }, //Accessibile a tutti
+	{ path: "/students", element: <Students /> }, //Accessibile solo agli admin
 ])
 
 createRoot(document.getElementById("root")!).render(

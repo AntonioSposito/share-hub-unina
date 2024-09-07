@@ -20,8 +20,14 @@ function CollapsibleExample() {
 						<Nav.Link href="/hhshshshs">404test</Nav.Link> */}
 					</Nav>
 					<Nav>
-						<Nav.Link href="/professors">Professori</Nav.Link>
-						<Nav.Link href="/courses">Corsi</Nav.Link>
+						{user.id != -1 && (
+							<>
+								<Nav.Link href="/professors">
+									Professori
+								</Nav.Link>
+								<Nav.Link href="/courses">Corsi</Nav.Link>
+							</>
+						)}
 						{user.role === "Admin" && (
 							<>
 								<Nav.Link href="/enrollments">

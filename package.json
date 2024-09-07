@@ -2,6 +2,7 @@
   "name": "share-hub-unina",
   "version": "1.0.0",
   "devDependencies": {
+    "@types/multer": "^1.4.12",
     "prisma": "^5.18.0",
     "turbo": "^2.0.12"
   },
