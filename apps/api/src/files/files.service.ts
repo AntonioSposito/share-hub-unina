@@ -112,7 +112,7 @@ export class FilesService {
     if (role === 'Admin') {
       return this.prismaService.file.findMany();
     } else {
-      throw new ForbiddenException('Only admins can view all the files');
+      throw new UnauthorizedException('Only admins can view all the files');
     }
   }
 

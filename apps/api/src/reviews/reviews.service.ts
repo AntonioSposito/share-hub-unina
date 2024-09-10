@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateReviewdto, UpdateReviewdto } from './dto/reviews.dto';
@@ -81,7 +85,7 @@ export class ReviewsService {
 
     //Tutte le recensioni, solo gli admin
     if (!userId && !fileId && role !== 'Admin') {
-      throw new ForbiddenException(
+      throw new UnauthorizedException(
         'Access denied. Only admins can see all the reviews',
       );
     }

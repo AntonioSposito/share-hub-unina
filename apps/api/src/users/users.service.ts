@@ -94,6 +94,7 @@ export class UsersService {
         id,
       },
       data: updateUserDto,
+      select: { id: true, name: true, lastname: true, email: true, role: true },
     });
   }
 
@@ -102,6 +103,7 @@ export class UsersService {
       where: {
         id,
       },
+      select: { id: true, name: true, lastname: true, email: true, role: true },
     });
   }
 }

@@ -71,7 +71,7 @@ export class AuthService {
       role: foundUser.role,
     });
     if (!token) {
-      throw new ForbiddenException();
+      throw new ForbiddenException("Can't sign the token");
     }
 
     res.cookie('token', token);
@@ -110,6 +110,9 @@ export class AuthService {
     role: string;
   }) {
     const payload = args;
-    return this.jwtService.signAsync(payload, { secret: jwtSecret });
+    return this.jwtService.signAsync(payload, {
+      secret: jwtSecret,
+      expiresIn: '30m',
+    });
   }
 }
