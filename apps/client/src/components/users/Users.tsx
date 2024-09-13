@@ -16,11 +16,11 @@ interface User {
 	role: string
 }
 
-interface DemoProps {
+interface UsersProps {
 	userIdProp?: number // Nuova prop opzionale per accettare un userId
 }
 
-export default function Demo({ userIdProp }: DemoProps) {
+export default function Users({ userIdProp }: UsersProps) {
 	const { id: idFromParams } = useParams<{ id?: string }>()
 	const id = userIdProp || idFromParams // Usa l'id passato come prop o quello nella URL
 	const [error, setError] = useState<any>()

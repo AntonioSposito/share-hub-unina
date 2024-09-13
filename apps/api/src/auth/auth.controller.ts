@@ -26,13 +26,13 @@ export class AuthController {
   }
 
   @Post('signin')
-  signin(@Body() loginUserDto: SigninDto, @Req() req, @Res() res) {
-    return this.authService.signin(loginUserDto, req, res);
+  signin(@Body() loginUserDto: SigninDto, @Res() res) {
+    return this.authService.signin(loginUserDto, res);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('signout')
-  signout(@Req() req, @Res() res) {
-    return this.authService.signout(req, res);
+  signout(@Res() res) {
+    return this.authService.signout(res);
   }
 }

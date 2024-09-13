@@ -12,7 +12,7 @@ interface User {
 	role: string
 }
 
-export default function Demo() {
+export default function Professors() {
 	const [error, setError] = useState()
 	const [isLoading, setIsLoading] = useState(false)
 	const [users, setUsers] = useState<User[]>([])

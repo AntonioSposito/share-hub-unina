@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -14,7 +13,6 @@ import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
 import {
   AdminGuard,
-  AdminOrProfessorGuard,
   AdminOrSelfGuard,
   JwtAuthGuard,
 } from 'src/auth/jwt/jwt.guard';

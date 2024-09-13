@@ -13,6 +13,7 @@ import { jwtSecret } from 'src/utils/constants';
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  //Attualmente non è utulizzato
   async create(createUserDto: Prisma.UserCreateInput) {
     if (createUserDto.email.endsWith('@unina.it')) {
       createUserDto.isProfessor = true;

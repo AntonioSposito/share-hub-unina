@@ -24,6 +24,7 @@ import Students from "./components/users/Students.tsx"
 import Enrollments from "./components/enrollments/Enrollments.tsx"
 import Files from "./components/files/Files.tsx"
 import Reviews from "./components/reviews/Reviews.tsx"
+import CodeMap from "./components/CodeMap.tsx"
 
 import UserProvider from "./contexts/UserContext.tsx"
 
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
 	{ path: "/profile", element: <Profile /> },
 	{ path: "/professors", element: <Professors /> }, //Accessibile a tutti
 	{ path: "/students", element: <Students /> }, //Accessibile solo agli admin
+	{ path: "/map", element: <CodeMap /> },
 ])
 
 createRoot(document.getElementById("root")!).render(
