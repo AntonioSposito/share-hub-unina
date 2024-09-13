@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.17.0/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.17.0/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.17.0/dist/index.js"></script><script>(r => {
+                setTimeout(r);
+              })(() => {
+  const {
+    markmap,
+    mm
+  } = window;
+  const {
+    el
+  } = markmap.Toolbar.create(mm);
+  el.setAttribute('style', 'position:absolute;bottom:20px;right:20px');
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+            })(() => window.markmap,null,{"content":"share-hub-unina","children":[{"content":"api","children":[{"content":"prisma","children":[{"content":"dev.db","children":[],"payload":{"lines":"7,8"}},{"content":"prisma.module.ts","children":[],"payload":{"lines":"9,10"}},{"content":"prisma.service.ts","children":[],"payload":{"lines":"11,12"}},{"content":"schema.prisma","children":[],"payload":{"lines":"13,14"}}],"payload":{"lines":"5,6"}},{"content":"src","children":[{"content":"auth","children":[{"content":"dto","children":[{"content":"auth dto","children":[],"payload":{"lines":"21,22"}},{"content":"auth roles","children":[],"payload":{"lines":"22,24"}}],"payload":{"lines":"19,20"}},{"content":"jwt","children":[{"content":"jwt guards","children":[],"payload":{"lines":"26,27"}},{"content":"jwt strategies","children":[],"payload":{"lines":"27,29"}}],"payload":{"lines":"24,25"}},{"content":"auth controller","children":[],"payload":{"lines":"29,30"}},{"content":"auth service","children":[],"payload":{"lines":"31,32"}},{"content":"auth module","children":[],"payload":{"lines":"33,34"}}],"payload":{"lines":"17,18"}},{"content":"courses","children":[{"content":"dto","children":[{"content":"courses dto","children":[],"payload":{"lines":"39,41"}}],"payload":{"lines":"37,38"}},{"content":"courses controller","children":[],"payload":{"lines":"41,42"}},{"content":"courses service","children":[],"payload":{"lines":"43,44"}},{"content":"courses module","children":[],"payload":{"lines":"45,46"}}],"payload":{"lines":"35,36"}},{"content":"enrollments","children":[{"content":"dto","children":[{"content":"enrollments dto","children":[],"payload":{"lines":"51,53"}}],"payload":{"lines":"49,50"}},{"content":"enrollments controller","children":[],"payload":{"lines":"53,54"}},{"content":"enrollments service","children":[],"payload":{"lines":"55,56"}},{"content":"enrollments module","children":[],"payload":{"lines":"57,58"}}],"payload":{"lines":"47,48"}},{"content":"files","children":[{"content":"dto","children":[{"content":"files dto","children":[],"payload":{"lines":"63,65"}}],"payload":{"lines":"61,62"}},{"content":"files controller","children":[],"payload":{"lines":"65,66"}},{"content":"files service","children":[],"payload":{"lines":"67,68"}},{"content":"files module","children":[],"payload":{"lines":"69,70"}}],"payload":{"lines":"59,60"}},{"content":"reviews","children":[{"content":"dto","children":[{"content":"reviews dto","children":[],"payload":{"lines":"75,77"}}],"payload":{"lines":"73,74"}},{"content":"reviews controller","children":[],"payload":{"lines":"77,78"}},{"content":"reviews service","children":[],"payload":{"lines":"79,80"}},{"content":"reviews module","children":[],"payload":{"lines":"81,82"}}],"payload":{"lines":"71,72"}},{"content":"users","children":[{"content":"users controller","children":[],"payload":{"lines":"85,86"}},{"content":"users service","children":[],"payload":{"lines":"87,88"}},{"content":"users module","children":[],"payload":{"lines":"89,90"}}],"payload":{"lines":"83,84"}}],"payload":{"lines":"15,16"}},{"content":"app controller","children":[],"payload":{"lines":"91,92"}},{"content":"app service","children":[],"payload":{"lines":"93,94"}},{"content":"app module","children":[],"payload":{"lines":"95,96"}}],"payload":{"lines":"3,4"}},{"content":"client/src","children":[{"content":"components","children":[{"content":"auth","children":[{"content":"login form","children":[],"payload":{"lines":"103,104"}},{"content":"login button","children":[],"payload":{"lines":"104,105"}},{"content":"login link","children":[],"payload":{"lines":"105,106"}},{"content":"registration form","children":[],"payload":{"lines":"106,108"}}],"payload":{"lines":"101,102"}},{"content":"courses","children":[{"content":"add course form","children":[],"payload":{"lines":"110,111"}},{"content":"courses table","children":[],"payload":{"lines":"111,112"}},{"content":"delete couse form","children":[],"payload":{"lines":"112,113"}},{"content":"edit course form","children":[],"payload":{"lines":"113,115"}}],"payload":{"lines":"108,109"}},{"content":"enrollments","children":[{"content":"add enrollment form","children":[],"payload":{"lines":"117,118"}},{"content":"enrollments table","children":[],"payload":{"lines":"118,119"}},{"content":"delete enrollment form","children":[],"payload":{"lines":"119,121"}}],"payload":{"lines":"115,116"}},{"content":"files","children":[{"content":"add file form","children":[],"payload":{"lines":"123,124"}},{"content":"files table","children":[],"payload":{"lines":"124,125"}},{"content":"delete file form","children":[],"payload":{"lines":"125,126"}},{"content":"edit file form","children":[],"payload":{"lines":"126,128"}}],"payload":{"lines":"121,122"}},{"content":"reviews","children":[{"content":"add review form","children":[],"payload":{"lines":"130,131"}},{"content":"reviews table","children":[],"payload":{"lines":"131,132"}},{"content":"delete review form","children":[],"payload":{"lines":"132,133"}},{"content":"edit review form","children":[],"payload":{"lines":"133,135"}}],"payload":{"lines":"128,129"}},{"content":"users","children":[{"content":"users table","children":[],"payload":{"lines":"137,138"}},{"content":"professors table","children":[],"payload":{"lines":"138,139"}},{"content":"students table","children":[],"payload":{"lines":"139,140"}},{"content":"delete user form","children":[],"payload":{"lines":"140,141"}},{"content":"edit user form","children":[],"payload":{"lines":"141,143"}}],"payload":{"lines":"135,136"}},{"content":"footer","children":[],"payload":{"lines":"143,144"}},{"content":"navbar","children":[],"payload":{"lines":"145,146"}},{"content":"home page","children":[],"payload":{"lines":"147,148"}},{"content":"not found page","children":[],"payload":{"lines":"149,150"}},{"content":"profile page","children":[],"payload":{"lines":"151,152"}},{"content":"star rating","children":[],"payload":{"lines":"153,154"}}],"payload":{"lines":"99,100"}},{"content":"contexts","children":[{"content":"user context","children":[],"payload":{"lines":"157,159"}}],"payload":{"lines":"155,156"}},{"content":"main","children":[],"payload":{"lines":"159,160"}}],"payload":{"lines":"97,98"}}],"payload":{"lines":"1,2"}},{"colorFreezeLevel":3,"initialExpandLevel":2})</script>
+</body>
+</html>

@@ -9,7 +9,6 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { jwtSecret } from 'src/utils/constants';
 import { Request, Response } from 'express';
-import { AuthHelpers } from './helpers/auth.helpers';
 import { Role } from './dto/auth.roles';
 
 @Injectable()
@@ -46,7 +45,7 @@ export class AuthService {
     return { message: 'signup was successfull' };
   }
 
-  async signin(loginUserDto: SigninDto, req: Request, res: Response) {
+  async signin(loginUserDto: SigninDto, res: Response) {
     const { email, password } = loginUserDto;
 
     const foundUser = await this.prismaService.user.findUnique({
@@ -88,7 +87,7 @@ export class AuthService {
     });
   }
 
-  async signout(req: Request, res: Response) {
+  async signout(res: Response) {
     res.clearCookie('token');
     return res.send({ message: 'logged out successfully' });
   }

@@ -7,7 +7,7 @@ interface DeleteUserProps {
 	userId: number
 }
 
-const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
+export default function DeleteUser({ userId }: DeleteUserProps) {
 	const [showModal, setShowModal] = useState(false)
 	const [isDeleting, setIsDeleting] = useState(false)
 	const [error, setError] = useState<string | null>(null)
@@ -87,4 +87,4 @@ const DeleteUser: React.FC<DeleteUserProps> = ({ userId }) => {
 	)
 }
 
-export default DeleteUser
+// export default DeleteUser

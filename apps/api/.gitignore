@@ -3,6 +3,7 @@ dist
 node_modules
 build
 prisma/migrations
+prisma/dbml
 
 
 # Logs
