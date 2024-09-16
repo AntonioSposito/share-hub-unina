@@ -1,8 +1,11 @@
-<center><img src="./img/share.png" alt="Share-Hub unina logo" width="120" /></center>
+<p align="center"><img src="./img/share.png" alt="Share-Hub unina logo" width="120" /></p>
 
 # Share Hub Unina
 
 Share-Hub Unina è un’ applicazione web sviluppata per il corso di Software Architecture Design. La webapp mette a disposizione degli utenti una piattaforma dove i professori possono caricare del materiale didattico per i loro corsi mentre gli studenti possono, dopo essersi iscritti ai corsi, scaricarne il materiale didattico e recensire i singoli file per poter condividere con altri studenti le loro opinioni sui file.
+
+<details>
+<summary>Immagini dell'applicazione</summary>
 
 ![Home page dell'applicazione](./img/homepage.png)
 ![Pagina di login](./img/login.png)
@@ -10,6 +13,8 @@ Share-Hub Unina è un’ applicazione web sviluppata per il corso di Software Ar
 ![Pagina dei corsi](./img/courses.png)
 ![Pagina dei file](./img/files.png)
 ![Pagina delle recensioni](./img/reviews.png)
+
+</details>
 
 ## Installazione
 
