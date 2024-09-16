@@ -58,5 +58,7 @@ export class AuthController {
   @Get('signout')
   signout(@Res() res) {
     return this.authService.signout(res);
+  signout(@Res() res) {
+    return this.authService.signout(res);
   }
 }
