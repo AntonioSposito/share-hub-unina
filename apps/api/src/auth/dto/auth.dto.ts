@@ -57,7 +57,7 @@ export class SigninDto {
 
   @ApiProperty({
     description: 'The password of the user',
-    example: 'test_password',
+    example: '******',
   })
   @IsNotEmpty()
   @IsString()

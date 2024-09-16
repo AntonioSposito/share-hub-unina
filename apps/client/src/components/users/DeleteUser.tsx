@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Alert, Button, Modal } from "react-bootstrap"
 
 const BASE_URL_API = import.meta.env.VITE_API_URL

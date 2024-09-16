@@ -27,6 +27,7 @@ function CollapsibleExample() {
 				</Nav>
 				<Nav>
 					<Nav.Link href="/map">Codebase Map</Nav.Link>
+					<Nav.Link href="/apidocs">API documentation</Nav.Link>
 					<Nav.Link href="https://github.com/AntonioSposito/share-hub-unina/">
 						Github Repo
 					</Nav.Link>

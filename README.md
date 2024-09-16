@@ -1,30 +1,19 @@
-<!-- <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<center><img src="./img/share.png" alt="Share-Hub unina logo" width="120" /></center>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p> -->
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 # Share Hub Unina
-Progetto di Antonio Sposito
+
+Share-Hub Unina è un’ applicazione web sviluppata per il corso di Software Architecture Design. La webapp mette a disposizione degli utenti una piattaforma dove i professori possono caricare del materiale didattico per i loro corsi mentre gli studenti possono, dopo essersi iscritti ai corsi, scaricarne il materiale didattico e recensire i singoli file per poter condividere con altri studenti le loro opinioni sui file.
+
+![Home page dell'applicazione](./img/homepage.png)
+![Pagina di login](./img/login.png)
+![Pagina dei professori](./img/professors.png)
+![Pagina dei corsi](./img/courses.png)
+![Pagina dei file](./img/files.png)
+![Pagina delle recensioni](./img/reviews.png)
 
 ## Installazione
+
+Prima di procedere all'installazione, si consiglia la lettura della documentazione, accessibile in questa repo.
 
 ```bash
 $ git clone https://github.com/AntonioSposito/share-hub-unina.git
@@ -35,6 +24,7 @@ $ npx prisma generate
 ```
 
 ## Dev mode
+
 Lancio dell'app in watch mode, due server in parallelo per frontend e backend rispettivamente.
 
 ```bash
@@ -42,17 +32,25 @@ Lancio dell'app in watch mode, due server in parallelo per frontend e backend ri
 $ npm run dev
 ```
 
-- Il frontend è un'app React servita da Vite su: http://localhost:5173
-- Il backend è un'app NestJs servita da Webpack su: http://localhost:3000/api
+Durante la fase di sviluppo, l'applicazione è gestita da due server separati:
 
-Le richieste dal frontend al backend avvengono con un API proxu fornito da Vite.
+-   **Frontend**: React espone il frontend su http://localhost:5173, servito da Vite
+-   **Backend**: NestJS che espone gli API endpoints su http://localhost:3000, servito da Webpack server. All’interno del backend è contenuto anche il database SQlite.
+
+Sia Vite che Webpack monitorano il codice per dei cambiamenti e aggiornano automaticamente frontend/backend durante lo sviluppo.
+
+La comunicazione tra il frontend e il backend avviene tramite un API proxy configurato in Vite, che semplifica le richieste evitando problemi di CORS. Questo setup consente uno sviluppo separato e parallelo dei due ambienti, facilitando l'iterazione rapida. L'uso di Turbo permette di coordinare il progetto monorepo, gestendo efficacemente entrambe le applicazioni in modo sincrono, con build parallele e migliorando i tempi di sviluppo.
 
 ## Production mode
-Singolo server NestJs che serve sia backend che frontend
-- App accessibile su: http://localhost:3000
+
+In fase di produzione, l'intero sistema viene consolidato su un singolo server **NodeJS** su http://localhost:3000 senza Webpack. Il backend gestisce le API, mentre il frontend, compilato come risorse statiche da Vite, viene servito dallo stesso server NestJS. In questo modo, NestJS si occupa sia della logica server-side che della distribuzione del frontend, semplificando l'infrastruttura e migliorando l'efficienza.
 
 ```bash
 # production mode
 $ npm run build
 $ npm run start
 ```
+
+## Licenza
+
+Share-Hub Unina è [MIT licensed](LICENSE).
