@@ -1,6 +1,7 @@
 import {
   ForbiddenException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
@@ -131,7 +132,7 @@ export class FilesService {
     });
 
     if (!foundFile) {
-      throw new UnauthorizedException('File not found.');
+      throw new NotFoundException('File not found.');
     }
 
     if (role === 'Admin') {

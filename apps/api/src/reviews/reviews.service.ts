@@ -44,6 +44,20 @@ export class ReviewsService {
         );
       }
     }
+    const foundReview = this.prismaService.review.findFirst({
+      where: {
+        userId: createReviewDto.userId,
+        fileId: createReviewDto.fileId,
+      },
+    });
+
+    if (await foundReview) {
+      throw new ForbiddenException(
+        'Access denied. You can only review a file once',
+      );
+    }
+
+    createReviewDto.userId = userId;
 
     const newReview = await this.prismaService.review.create({
       data: createReviewDto,
@@ -222,14 +236,19 @@ export class ReviewsService {
       },
     });
 
+    if (
+      foundReview.fileId != updateReviewDto.fileId ||
+      foundReview.userId != updateReviewDto.userId
+    ) {
+      throw new ForbiddenException(
+        'Access denied. You cannot modify the fileId or the userId of a review',
+      );
+    }
+
     if (role === 'Student') {
       if (userId != updateReviewDto.userId) {
         throw new ForbiddenException(
           'Access denied. You cannot modify a review you did not write',
-        );
-      } else if (foundReview.fileId != updateReviewDto.fileId) {
-        throw new ForbiddenException(
-          'Access denied. You cannot modify the fileId of a review',
         );
       }
     }
@@ -261,7 +280,7 @@ export class ReviewsService {
   }
 
   async remove(id: number, req: Request) {
-    const deletedReview = await this.prismaService.review.delete({
+    const foundReview = await this.prismaService.review.findUnique({
       where: {
         id,
       },
@@ -273,14 +292,14 @@ export class ReviewsService {
       role: string;
     };
 
-    if (role === 'Student' && deletedReview.userId != userId) {
+    if (role === 'Student' && foundReview.userId != userId) {
       throw new ForbiddenException(
         'Access denied. You cannot delete a review you did not write',
       );
     }
 
     // Ricalcola la media del voto per il file dopo la rimozione
-    const fileId = deletedReview.fileId;
+    const fileId = foundReview.fileId;
     const reviews = await this.prismaService.review.findMany({
       where: { fileId },
       select: { rating: true },
@@ -299,6 +318,12 @@ export class ReviewsService {
     await this.prismaService.file.update({
       where: { id: fileId },
       data: { avgRating: averageRating },
+    });
+
+    const deletedReview = this.prismaService.review.delete({
+      where: {
+        id,
+      },
     });
 
     return deletedReview;

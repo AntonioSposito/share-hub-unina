@@ -55,7 +55,7 @@ model File {
   name         String
   description  String?  @default("Dammi una descrizione!")
   path         String?  @default("Dammi/un/path!")
-  avgRating    Float?
+  avgRating    Float? @default(-1)
   createdAt    DateTime @default(now())
   modifiedAt   DateTime @updatedAt
   courseId     Int //FK per corso

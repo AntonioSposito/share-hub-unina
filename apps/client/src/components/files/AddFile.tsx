@@ -70,25 +70,25 @@ const AddFile: React.FC<AddFileProps> = ({ courseId }) => {
 				)
 			}
 
-			const { id: fileId } = await metadataResponse.json()
+			//const { id: fileId } = await metadataResponse.json()
 
 			// Seconda richiesta: POST /files/upload per caricare il file
-			const formData = new FormData()
-			formData.append("file", file)
-			formData.append("fileId", fileId.toString())
+			// const formData = new FormData()
+			// formData.append("file", file)
+			// formData.append("fileId", fileId.toString())
 
-			const uploadResponse = await fetch(`${BASE_URL_API}/files/upload`, {
-				method: "POST",
-				credentials: "include",
-				body: formData,
-			})
+			// const uploadResponse = await fetch(`${BASE_URL_API}/files/upload`, {
+			// 	method: "POST",
+			// 	credentials: "include",
+			// 	body: formData,
+			// })
 
-			if (!uploadResponse.ok) {
-				const errorData = await uploadResponse.json()
-				throw new Error(
-					errorData.message || "Errore durante l'upload del file"
-				)
-			}
+			// if (!uploadResponse.ok) {
+			// 	const errorData = await uploadResponse.json()
+			// 	throw new Error(
+			// 		errorData.message || "Errore durante l'upload del file"
+			// 	)
+			// }
 
 			setSuccess(true)
 			resetForm()

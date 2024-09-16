@@ -76,7 +76,7 @@ export class AuthService {
     res.cookie('token', token);
 
     return res.send({
-      message: 'loggged in successffuly',
+      message: 'logged in successfuly',
       user: {
         id: foundUser.id,
         email: foundUser.email,
