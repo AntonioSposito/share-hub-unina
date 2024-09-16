@@ -36,9 +36,14 @@ function Home() {
 				</>
 			)}
 
-			<Button variant="success" onClick={() => navigate("/professors")}>
-				Lista Professori
-			</Button>
+			{user.id != -1 && (
+				<Button
+					variant="success"
+					onClick={() => navigate("/professors")}
+				>
+					Lista Professori
+				</Button>
+			)}
 		</Container>
 	)
 }

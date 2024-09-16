@@ -3050,7 +3050,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"fileId\": 1,\n  \"userId\": 2,\n  \"rating\": 5,\n  \"text\": \"Testo di prova\"\n}",
+							"raw": "{\n  \"fileId\": 5,\n  \"userId\": 2,\n  \"rating\": 5,\n  \"text\": \"Testo di prova\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -4541,7 +4541,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"fileId\": 1,\n  \"userId\": 2,\n  \"rating\": 5,\n  \"text\": \"Nuovo Testo di prova\"\n}",
+							"raw": "{\n  \"fileId\": 5,\n  \"userId\": 2,\n  \"rating\": 5,\n  \"text\": \"Nuovo Testo di prova\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
