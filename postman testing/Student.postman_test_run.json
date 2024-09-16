@@ -1,0 +1,1663 @@
+{
+	"id": "b55e1d58-3e4d-402e-9e6e-998137ef75cb",
+	"name": "Student",
+	"timestamp": "2024-09-16T09:02:25.226Z",
+	"collection_id": "33868941-fc74414f-821e-4612-bf72-2a2cc983c231",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 61,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-09-16T09:02:20.016Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "156e566a-c3b0-4478-b6cb-702903ef9088",
+			"name": "Login student",
+			"url": "http://localhost:3000/api/auth/signin",
+			"time": 263,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Verify Cookie 'token' is present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				263
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Verify Cookie 'token' is present in response": true
+				}
+			]
+		},
+		{
+			"id": "04d8369a-dcbf-4f95-a747-d422029ea65e",
+			"name": "Create a new course",
+			"url": "http://localhost:3000/api/courses",
+			"time": 4,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "2378f454-635b-41e0-876e-6577a8d7efae",
+			"name": "Get all courses",
+			"url": "http://localhost:3000/api/courses?userId=<string>",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "363bbc60-b181-4459-acb4-3fa2985c29fe",
+			"name": "Get all courses by userid",
+			"url": "http://localhost:3000/api/courses?userId=5",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "7b8d74cd-ccc4-4cea-93cc-5d47261a2263",
+			"name": "Get a course by ID",
+			"url": "http://localhost:3000/api/courses/5",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "668b2fc6-8de8-42cd-bf20-0b20b1fbd1b1",
+			"name": "Update a course by ID",
+			"url": "http://localhost:3000/api/courses/5",
+			"time": 4,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "7c2dab73-90e6-4b47-8b79-c657eaa5fddd",
+			"name": "Delete a course by ID",
+			"url": "http://localhost:3000/api/courses/5",
+			"time": 5,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "b361d13e-42fc-4352-b39d-980456b95dda",
+			"name": "Logout",
+			"url": "http://localhost:3000/api/auth/signout",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Successful GET request": true,
+				"Verify Cookie 'token' is not present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful GET request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is not present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Successful GET request": true,
+					"Verify Cookie 'token' is not present in response": true
+				}
+			]
+		},
+		{
+			"id": "dd5c2475-1ecf-446f-922f-ab094e276f3e",
+			"name": "Login student",
+			"url": "http://localhost:3000/api/auth/signin",
+			"time": 79,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Verify Cookie 'token' is present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				79
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Verify Cookie 'token' is present in response": true
+				}
+			]
+		},
+		{
+			"id": "48a604ab-7662-4b98-bdcf-bda2ef594c65",
+			"name": "Create a new file",
+			"url": "http://localhost:3000/api/files",
+			"time": 4,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "9bab8f6d-9e4a-48d2-b1af-0a200d2a06e6",
+			"name": "Get all files",
+			"url": "http://localhost:3000/api/files?courseId=<string>",
+			"time": 6,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "c01f47e9-15b3-4f38-98a2-65e5ab6e7c69",
+			"name": "Get all files of a course",
+			"url": "http://localhost:3000/api/files?courseId=5",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "a68e46b5-e93c-4839-925d-0665e9ac07bf",
+			"name": "Get all files of a course not enrolled",
+			"url": "http://localhost:3000/api/files?courseId=59",
+			"time": 6,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "f9719b96-0255-4c87-9949-00be6129effe",
+			"name": "Get a file by id.",
+			"url": "http://localhost:3000/api/files/1",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "068c5003-8b67-49ea-94dc-70610c0ad1ad",
+			"name": "Get a file by id but not enrolled in the course",
+			"url": "http://localhost:3000/api/files/31",
+			"time": 8,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "87616ab9-f96c-451d-8b11-d95830714d76",
+			"name": "Update a file by ID",
+			"url": "http://localhost:3000/api/files/1",
+			"time": 4,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "47ef269e-9b08-4515-9453-b71d185d20ea",
+			"name": "Delete a file by ID",
+			"url": "http://localhost:3000/api/files/1",
+			"time": 4,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "1fbdb571-836e-4552-b90b-908cc90e4ca7",
+			"name": "Logout",
+			"url": "http://localhost:3000/api/auth/signout",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Successful GET request": true,
+				"Verify Cookie 'token' is not present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful GET request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is not present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Successful GET request": true,
+					"Verify Cookie 'token' is not present in response": true
+				}
+			]
+		},
+		{
+			"id": "269dc347-4876-49ca-9d48-98ad7b59f301",
+			"name": "Login student",
+			"url": "http://localhost:3000/api/auth/signin",
+			"time": 98,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Verify Cookie 'token' is present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				98
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Verify Cookie 'token' is present in response": true
+				}
+			]
+		},
+		{
+			"id": "29b3f48c-9db8-47f8-a5db-d2bae9f2a3a0",
+			"name": "Create a new review",
+			"url": "http://localhost:3000/api/reviews",
+			"time": 34,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Successful POST request": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				34
+			],
+			"allTests": [
+				{
+					"Successful POST request": true
+				}
+			]
+		},
+		{
+			"id": "53d2ce7d-34ea-4dbf-ba54-e5d658625d95",
+			"name": "Create the same review",
+			"url": "http://localhost:3000/api/reviews",
+			"time": 11,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "739bab93-cf8c-4d6a-9f3e-33f2dcb3438b",
+			"name": "Get all reviews",
+			"url": "http://localhost:3000/api/reviews?userId=<string>&fileId=<string>",
+			"time": 7,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "8595876e-86e4-46b8-89d1-0bccd6ce77b8",
+			"name": "Get all reviews by fileId",
+			"url": "http://localhost:3000/api/reviews?userId=<string>&fileId=5",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "269dc142-f61a-4b89-ae7b-61bc18ed2e6c",
+			"name": "Get all reviews by fileId but not enrolled in the course the file is from",
+			"url": "http://localhost:3000/api/reviews?userId=<string>&fileId=33",
+			"time": 7,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "5a44e399-98a2-4e99-861b-dbd48299fd0a",
+			"name": "Get all reviews by own userId",
+			"url": "http://localhost:3000/api/reviews?userId=<string>&fileId=2",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "ce676e42-2030-435a-98cf-ff55a14802d5",
+			"name": "Get all reviews by not own userId",
+			"url": "http://localhost:3000/api/reviews?userId=1&fileId=",
+			"time": 7,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "6c59879b-5018-429d-8173-6ef95d312fa7",
+			"name": "Get a review by id.",
+			"url": "http://localhost:3000/api/reviews/54",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "6a7aaefa-7eae-4669-b63c-4917b958d469",
+			"name": "Update a review by id.",
+			"url": "http://localhost:3000/api/reviews/54",
+			"time": 30,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				30
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "20422ce1-bb87-425f-8311-7e46241b1ce3",
+			"name": "Update a review by id with wrong userId or fileId",
+			"url": "http://localhost:3000/api/reviews/54",
+			"time": 9,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "54e5f544-43b2-48b5-9d3b-40a27081bf3f",
+			"name": "Update a review not owned by id",
+			"url": "http://localhost:3000/api/reviews/31",
+			"time": 7,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "24c6649f-bcca-4030-8e14-2d802815a1a5",
+			"name": "Delete a review by id.",
+			"url": "http://localhost:3000/api/reviews/54",
+			"time": 28,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				28
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "26e34f57-58c6-40e6-aae5-5d3b87b6703d",
+			"name": "Delete a review not owned by id",
+			"url": "http://localhost:3000/api/reviews/31",
+			"time": 7,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "d24c1393-d1ba-4224-9adf-1866c3db1738",
+			"name": "Logout",
+			"url": "http://localhost:3000/api/auth/signout",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Successful GET request": true,
+				"Verify Cookie 'token' is not present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful GET request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is not present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Successful GET request": true,
+					"Verify Cookie 'token' is not present in response": true
+				}
+			]
+		},
+		{
+			"id": "c595fe4f-3fe5-4770-87ae-256d0613699f",
+			"name": "Login student",
+			"url": "http://localhost:3000/api/auth/signin",
+			"time": 93,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Verify Cookie 'token' is present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				93
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Verify Cookie 'token' is present in response": true
+				}
+			]
+		},
+		{
+			"id": "c39854d6-e683-4d6b-b7e7-635441cd04ae",
+			"name": "Create a new enrollment",
+			"url": "http://localhost:3000/api/enrollments",
+			"time": 16,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Successful POST request": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Successful POST request": true
+				}
+			]
+		},
+		{
+			"id": "cdacf277-3d92-4014-a0da-ed8b2470d3c5",
+			"name": "Get all the enrollments",
+			"url": "http://localhost:3000/api/enrollments?userId=<string>&courseId=<string>&fileId=<string>",
+			"time": 6,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "acb2c3c2-f97a-47b5-bc47-962ade1a4e99",
+			"name": "Get all the enrollments by own userId",
+			"url": "http://localhost:3000/api/enrollments?userId=2&courseId=<string>&fileId=<string>",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "611b795d-a63e-4baa-a52d-5cda777b570c",
+			"name": "Get all the enrollments by not own userId",
+			"url": "http://localhost:3000/api/enrollments?userId=1&courseId=<string>&fileId=<string>",
+			"time": 4,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "20c02cba-de12-4faf-af4b-1e80af8cd809",
+			"name": "Get an enrollment by id.",
+			"url": "http://localhost:3000/api/enrollments/63",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "882f9792-55f5-46d9-b2b9-3b1841dd3bc5",
+			"name": "Get an enrollment by id not owned",
+			"url": "http://localhost:3000/api/enrollments/47",
+			"time": 5,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "2af6c25c-b58f-4512-b060-eea8b0cf4ed4",
+			"name": "Delete an owned enrollment by id.",
+			"url": "http://localhost:3000/api/enrollments/63",
+			"time": 19,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "7b80fb24-0b29-4f91-9b30-2f695a5d04ea",
+			"name": "Delete a not owned enrollment by id",
+			"url": "http://localhost:3000/api/enrollments/47",
+			"time": 9,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden"
+			},
+			"tests": {
+				"Status code is 403": true
+			},
+			"testPassFailCounts": {
+				"Status code is 403": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 403": true
+				}
+			]
+		},
+		{
+			"id": "2d73c664-af0f-4660-b920-41dd53d54fce",
+			"name": "Logout",
+			"url": "http://localhost:3000/api/auth/signout",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Successful GET request": true,
+				"Verify Cookie 'token' is not present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful GET request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is not present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Successful GET request": true,
+					"Verify Cookie 'token' is not present in response": true
+				}
+			]
+		},
+		{
+			"id": "b0699b6d-42c7-4110-9ef7-e73ee8173467",
+			"name": "Login student",
+			"url": "http://localhost:3000/api/auth/signin",
+			"time": 95,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Successful POST request": true,
+				"Verify Cookie 'token' is present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				95
+			],
+			"allTests": [
+				{
+					"Successful POST request": true,
+					"Verify Cookie 'token' is present in response": true
+				}
+			]
+		},
+		{
+			"id": "416e5a4b-99b9-4c56-8727-2172acca4ba2",
+			"name": "Get all the users",
+			"url": "http://localhost:3000/api/users",
+			"time": 5,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "30ac7f3e-b014-4799-9fe9-f57e121fe327",
+			"name": "Get all the professors",
+			"url": "http://localhost:3000/api/users/professors",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "c4a1ee41-ed63-43e5-974d-8089b176e5c1",
+			"name": "Get user by own ID",
+			"url": "http://localhost:3000/api/users/2",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "6da87a8a-67e8-49ca-bb54-db23d9c46463",
+			"name": "Update own user by ID",
+			"url": "http://localhost:3000/api/users/2",
+			"time": 18,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		},
+		{
+			"id": "aac52057-0b24-405e-9255-b8a58d22dd9d",
+			"name": "Update not own user by ID",
+			"url": "http://localhost:3000/api/users/1",
+			"time": 5,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "9a4b9894-e5f4-4864-8da0-a7b2e69a8d89",
+			"name": "Delete user by ID",
+			"url": "http://localhost:3000/api/users/2",
+			"time": 5,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 401": true
+				}
+			]
+		},
+		{
+			"id": "30582e2b-faa6-4029-853a-fb5920b15290",
+			"name": "Logout",
+			"url": "http://localhost:3000/api/auth/signout",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Successful GET request": true,
+				"Verify Cookie 'token' is not present in response": true
+			},
+			"testPassFailCounts": {
+				"Successful GET request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify Cookie 'token' is not present in response": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Successful GET request": true,
+					"Verify Cookie 'token' is not present in response": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 1014,
+	"collection": {
+		"requests": [
+			{
+				"id": "156e566a-c3b0-4478-b6cb-702903ef9088",
+				"method": "POST"
+			},
+			{
+				"id": "04d8369a-dcbf-4f95-a747-d422029ea65e",
+				"method": "POST"
+			},
+			{
+				"id": "2378f454-635b-41e0-876e-6577a8d7efae",
+				"method": "GET"
+			},
+			{
+				"id": "363bbc60-b181-4459-acb4-3fa2985c29fe",
+				"method": "GET"
+			},
+			{
+				"id": "7b8d74cd-ccc4-4cea-93cc-5d47261a2263",
+				"method": "GET"
+			},
+			{
+				"id": "668b2fc6-8de8-42cd-bf20-0b20b1fbd1b1",
+				"method": "PATCH"
+			},
+			{
+				"id": "7c2dab73-90e6-4b47-8b79-c657eaa5fddd",
+				"method": "DELETE"
+			},
+			{
+				"id": "b361d13e-42fc-4352-b39d-980456b95dda",
+				"method": "GET"
+			},
+			{
+				"id": "dd5c2475-1ecf-446f-922f-ab094e276f3e",
+				"method": "POST"
+			},
+			{
+				"id": "48a604ab-7662-4b98-bdcf-bda2ef594c65",
+				"method": "POST"
+			},
+			{
+				"id": "9bab8f6d-9e4a-48d2-b1af-0a200d2a06e6",
+				"method": "GET"
+			},
+			{
+				"id": "c01f47e9-15b3-4f38-98a2-65e5ab6e7c69",
+				"method": "GET"
+			},
+			{
+				"id": "a68e46b5-e93c-4839-925d-0665e9ac07bf",
+				"method": "GET"
+			},
+			{
+				"id": "f9719b96-0255-4c87-9949-00be6129effe",
+				"method": "GET"
+			},
+			{
+				"id": "068c5003-8b67-49ea-94dc-70610c0ad1ad",
+				"method": "GET"
+			},
+			{
+				"id": "87616ab9-f96c-451d-8b11-d95830714d76",
+				"method": "PATCH"
+			},
+			{
+				"id": "47ef269e-9b08-4515-9453-b71d185d20ea",
+				"method": "DELETE"
+			},
+			{
+				"id": "1fbdb571-836e-4552-b90b-908cc90e4ca7",
+				"method": "GET"
+			},
+			{
+				"id": "269dc347-4876-49ca-9d48-98ad7b59f301",
+				"method": "POST"
+			},
+			{
+				"id": "29b3f48c-9db8-47f8-a5db-d2bae9f2a3a0",
+				"method": "POST"
+			},
+			{
+				"id": "53d2ce7d-34ea-4dbf-ba54-e5d658625d95",
+				"method": "POST"
+			},
+			{
+				"id": "739bab93-cf8c-4d6a-9f3e-33f2dcb3438b",
+				"method": "GET"
+			},
+			{
+				"id": "8595876e-86e4-46b8-89d1-0bccd6ce77b8",
+				"method": "GET"
+			},
+			{
+				"id": "269dc142-f61a-4b89-ae7b-61bc18ed2e6c",
+				"method": "GET"
+			},
+			{
+				"id": "5a44e399-98a2-4e99-861b-dbd48299fd0a",
+				"method": "GET"
+			},
+			{
+				"id": "ce676e42-2030-435a-98cf-ff55a14802d5",
+				"method": "GET"
+			},
+			{
+				"id": "6c59879b-5018-429d-8173-6ef95d312fa7",
+				"method": "GET"
+			},
+			{
+				"id": "6a7aaefa-7eae-4669-b63c-4917b958d469",
+				"method": "PATCH"
+			},
+			{
+				"id": "20422ce1-bb87-425f-8311-7e46241b1ce3",
+				"method": "PATCH"
+			},
+			{
+				"id": "54e5f544-43b2-48b5-9d3b-40a27081bf3f",
+				"method": "PATCH"
+			},
+			{
+				"id": "24c6649f-bcca-4030-8e14-2d802815a1a5",
+				"method": "DELETE"
+			},
+			{
+				"id": "26e34f57-58c6-40e6-aae5-5d3b87b6703d",
+				"method": "DELETE"
+			},
+			{
+				"id": "d24c1393-d1ba-4224-9adf-1866c3db1738",
+				"method": "GET"
+			},
+			{
+				"id": "c595fe4f-3fe5-4770-87ae-256d0613699f",
+				"method": "POST"
+			},
+			{
+				"id": "c39854d6-e683-4d6b-b7e7-635441cd04ae",
+				"method": "POST"
+			},
+			{
+				"id": "cdacf277-3d92-4014-a0da-ed8b2470d3c5",
+				"method": "GET"
+			},
+			{
+				"id": "acb2c3c2-f97a-47b5-bc47-962ade1a4e99",
+				"method": "GET"
+			},
+			{
+				"id": "611b795d-a63e-4baa-a52d-5cda777b570c",
+				"method": "GET"
+			},
+			{
+				"id": "20c02cba-de12-4faf-af4b-1e80af8cd809",
+				"method": "GET"
+			},
+			{
+				"id": "882f9792-55f5-46d9-b2b9-3b1841dd3bc5",
+				"method": "GET"
+			},
+			{
+				"id": "2af6c25c-b58f-4512-b060-eea8b0cf4ed4",
+				"method": "DELETE"
+			},
+			{
+				"id": "7b80fb24-0b29-4f91-9b30-2f695a5d04ea",
+				"method": "DELETE"
+			},
+			{
+				"id": "2d73c664-af0f-4660-b920-41dd53d54fce",
+				"method": "GET"
+			},
+			{
+				"id": "b0699b6d-42c7-4110-9ef7-e73ee8173467",
+				"method": "POST"
+			},
+			{
+				"id": "416e5a4b-99b9-4c56-8727-2172acca4ba2",
+				"method": "GET"
+			},
+			{
+				"id": "30ac7f3e-b014-4799-9fe9-f57e121fe327",
+				"method": "GET"
+			},
+			{
+				"id": "c4a1ee41-ed63-43e5-974d-8089b176e5c1",
+				"method": "GET"
+			},
+			{
+				"id": "6da87a8a-67e8-49ca-bb54-db23d9c46463",
+				"method": "PATCH"
+			},
+			{
+				"id": "aac52057-0b24-405e-9255-b8a58d22dd9d",
+				"method": "PATCH"
+			},
+			{
+				"id": "9a4b9894-e5f4-4864-8da0-a7b2e69a8d89",
+				"method": "DELETE"
+			},
+			{
+				"id": "30582e2b-faa6-4029-853a-fb5920b15290",
+				"method": "GET"
+			}
+		]
+	}
+}
